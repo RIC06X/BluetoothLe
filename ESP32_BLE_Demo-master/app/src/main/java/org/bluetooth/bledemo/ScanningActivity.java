@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import yanjiex.calit2.uci.MainActivity;
+
 public class ScanningActivity extends ListActivity {
 	
 	private static final long SCANNING_TIMEOUT = 5 * 1000; /* 5 seconds */
@@ -122,7 +124,7 @@ public class ScanningActivity extends ListActivity {
         final BluetoothDevice device = mDevicesListAdapter.getDevice(position);
         if (device == null) return;
         
-        final Intent intent = new Intent(this, PeripheralActivity.class);
+        final Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(PeripheralActivity.EXTRAS_DEVICE_NAME, device.getName());
         intent.putExtra(PeripheralActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
         intent.putExtra(PeripheralActivity.EXTRAS_DEVICE_RSSI, mDevicesListAdapter.getRssi(position));
