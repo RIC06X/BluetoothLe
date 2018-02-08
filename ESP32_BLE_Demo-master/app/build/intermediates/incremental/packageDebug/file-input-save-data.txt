@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Wed Feb 07 15:14:06 PST 2018
+#Wed Feb 07 18:17:21 PST 2018
 122.file=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/res/resources-debug.ap_/res/layout/abc_action_bar_up_container.xml
 60.set=ANDROID_RESOURCE
 129.file=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/res/resources-debug.ap_/res/drawable/abc_seekbar_track_material.xml
