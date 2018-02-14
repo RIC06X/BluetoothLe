@@ -128,7 +128,7 @@ public class ScanningActivity extends ListActivity {
         intent.putExtra(PeripheralActivity.EXTRAS_DEVICE_NAME, device.getName());
         intent.putExtra(PeripheralActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
         intent.putExtra(PeripheralActivity.EXTRAS_DEVICE_RSSI, mDevicesListAdapter.getRssi(position));
-        
+
         if (mScanning) {
             mScanning = false;
             invalidateOptionsMenu();

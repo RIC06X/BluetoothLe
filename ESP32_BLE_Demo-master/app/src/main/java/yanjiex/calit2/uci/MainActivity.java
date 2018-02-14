@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.bluetooth.bledemo.BleDefinedUUIDs;
 import org.bluetooth.bledemo.BleNamesResolver;
 import org.bluetooth.bledemo.BleWrapper;
 import org.bluetooth.bledemo.BleWrapperUiCallbacks;
@@ -29,7 +30,7 @@ import org.bluetooth.bledemo.ServicesListAdapter;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends Activity implements BleWrapperUiCallbacks{
+public class MainActivity extends Activity {
     public static final String EXTRAS_DEVICE_NAME    = "BLE_DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "BLE_DEVICE_ADDRESS";
     public static final String EXTRAS_DEVICE_RSSI    = "BLE_DEVICE_RSSI";
@@ -100,7 +101,159 @@ public class MainActivity extends Activity implements BleWrapperUiCallbacks{
     @Override
     protected void onResume() {
         super.onResume();
-        if(mBleWrapper == null) mBleWrapper = new BleWrapper(this, this);
+        if(mBleWrapper == null) mBleWrapper = new BleWrapper(this, new BleWrapperUiCallbacks.Null() {
+            //-----------------------------------------BLE_WrapperUiCallBack--START---------------------------------------
+            String LOGTAG = "BLE WRAPPER";
+            @Override
+            public void uiDeviceFound(BluetoothDevice device, int rssi, byte[] record) {
+
+            }
+            @Override
+            public void uiDeviceConnected(BluetoothGatt gatt, BluetoothDevice device) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDeviceStatus.setText("connected\n");
+                        mDeviceAddressView.setText(mDeviceName);
+                        Log.d("Device Connected","YES");
+                    }
+                });
+            }
+            @Override
+            public void uiDeviceDisconnected(BluetoothGatt gatt, BluetoothDevice device) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDeviceStatus.setText("disconnected\n");
+                        Log.d("Device Disconnected","YES");
+                    }
+                });
+            }
+
+            @Override
+            public void uiAvailableServices(final BluetoothGatt gatt, final BluetoothDevice device, final List<BluetoothGattService> services) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Log.d("IN uiAvailableServce","YES");
+                        for(BluetoothGattService service : services) {
+                            String uuid = service.getUuid().toString().toLowerCase(Locale.getDefault());
+                            String name = BleNamesResolver.resolveServiceName(uuid);
+                            String type = (service.getType() == BluetoothGattService.SERVICE_TYPE_PRIMARY) ? "Primary" : "Secondary";
+                            if (name=="Urology service"){
+                                mDeviceStatus.append(name+"\n");
+                                uiCharacteristicForService(gatt,device,service,service.getCharacteristics());
+                            }
+                        }
+                    }
+                });
+
+            }
+            @Override
+            public void uiCharacteristicForService(final BluetoothGatt gatt, final BluetoothDevice device, final BluetoothGattService service, final List<BluetoothGattCharacteristic> chars) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("uiCharForService","YES");
+                        String uuid = service.getUuid().toString().toLowerCase(Locale.getDefault());
+                        String name = BleNamesResolver.resolveServiceName(uuid);
+                        if (name=="Urology service"){
+                            for(BluetoothGattCharacteristic ch : chars) {
+                                String uuidC = ch.getUuid().toString().toLowerCase(Locale.getDefault());
+                                String nameC = BleNamesResolver.resolveCharacteristicName(uuidC);
+                                mDeviceStatus.append(nameC+"\n");
+                                uiCharacteristicsDetails(gatt,device,service,ch);
+                                //AUTO READ, CAN BE disabled
+                                if (nameC == "Weight"){
+                                    mBleWrapper.setNotificationForCharacteristic(ch, true);
+                                }
+                            }
+                        }}
+                });
+            }
+            //Resolve little endian coded floating number
+            public float resolveByteFloat(byte[] mRawValue){
+                float mFloatValue = 0;
+                String temp1;
+                String temp2;
+                String temp3;
+                String temp0;
+                String sbits;
+
+                //mRawValue is the Hex String,  mFloatValue is the float transfered from BLE;
+                if (mRawValue != null && mRawValue.length > 0) {
+                    //Convert rawData to binary strings
+                    temp0 =("0000000" + Integer.toBinaryString(0xFF & mRawValue[3])).replaceAll(".*(.{8})$", "$1");
+                    temp1 = ("0000000" + Integer.toBinaryString(0xFF & mRawValue[2])).replaceAll(".*(.{8})$", "$1");
+                    temp2 = ("0000000" + Integer.toBinaryString(0xFF & mRawValue[1])).replaceAll(".*(.{8})$", "$1");
+                    temp3 = ("0000000" + Integer.toBinaryString(0xFF & mRawValue[0])).replaceAll(".*(.{8})$", "$1");
+                    sbits = temp0+temp1+temp2+temp3;
+
+                    //Check the positive float and negative float
+                    if (sbits.charAt(0)=='0'){
+                        int bits = Integer.valueOf(sbits,2);
+                        mFloatValue =Float.intBitsToFloat(bits);
+                    }else{
+                        sbits = sbits.substring(1);
+                        int bits = Integer.valueOf(sbits,2);
+                        mFloatValue =-Float.intBitsToFloat(bits);
+                    }
+                }
+                return mFloatValue;
+            }
+            @Override
+            public void uiCharacteristicsDetails(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic characteristic) {
+                byte[] mRawValue= characteristic.getValue();
+                final float mFloatValue = resolveByteFloat(mRawValue);
+                Log.d(LOGTAG, "uiCharacteristicsDetails: " + mFloatValue);
+
+            }
+
+            //CRUCIAL IMPORTANT
+            float mFloatValue;
+            @Override
+            public void uiNewValueForCharacteristic(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, String strValue, int intValue, byte[] rawValue, String timestamp) {
+                Log.d("BLE WRAPPER", "got new Value");
+                 mFloatValue= resolveByteFloat(rawValue);
+                Log.d(LOGTAG, "uiCharacteristicsDetails: " + mFloatValue);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDeviceAddressView.setText(String.format("%f",mFloatValue)+" g");
+                    }
+                });
+            }
+
+            @Override
+            public void uiGotNotification(final BluetoothGatt gatt, final BluetoothDevice device, final BluetoothGattService service, final BluetoothGattCharacteristic characteristic) {
+                String ch = BleNamesResolver.resolveCharacteristicName(characteristic.getUuid().toString());
+                Log.d(LOGTAG,  "uiGotNotification: " + ch);
+
+            }
+            @Override
+            public void uiSuccessfulWrite(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, final String description) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Writing to " + description + " was finished successfully!", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            @Override
+            public void uiFailedWrite(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, final String description) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Writing to " + description + " FAILED!", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            @Override
+            public void uiNewRssiAvailable(BluetoothGatt gatt, BluetoothDevice device, final int rssi) {
+            }
+            //-----------------------------------------BLE_WrapperUiCallBack--END---------------------------------------
+        });
 
         if(mBleWrapper.initialize() == false) {
             finish();
@@ -111,100 +264,4 @@ public class MainActivity extends Activity implements BleWrapperUiCallbacks{
     }
 
 
-    public void uiDeviceFound(BluetoothDevice device, int rssi, byte[] record) {
-
-    }
-
-    public void uiDeviceConnected(BluetoothGatt gatt, BluetoothDevice device) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mDeviceStatus.setText("connected\n");
-                mDeviceAddressView.setText(mDeviceName);
-            }
-        });
-    }
-
-    public void uiDeviceDisconnected(BluetoothGatt gatt, BluetoothDevice device) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mDeviceStatus.setText("disconnected\n");
-
-            }
-        });
-    }
-
-    public void uiAvailableServices(final BluetoothGatt gatt, final BluetoothDevice device, final List<BluetoothGattService> services) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //Log.d("IN uiAvailableServce","YES");
-                for(BluetoothGattService service : services) {
-                    String uuid = service.getUuid().toString().toLowerCase(Locale.getDefault());
-                    String name = BleNamesResolver.resolveServiceName(uuid);
-                    String type = (service.getType() == BluetoothGattService.SERVICE_TYPE_PRIMARY) ? "Primary" : "Secondary";
-                    if (name=="Urology service"){
-                        mDeviceStatus.append(name+"\n");
-                        uiCharacteristicForService(gatt,device,service,service.getCharacteristics());
-                    }
-                }
-            }
-        });
-
-    }
-
-    public void uiCharacteristicForService(BluetoothGatt gatt, BluetoothDevice device, final BluetoothGattService service, final List<BluetoothGattCharacteristic> chars) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d("uiCharForService","YES");
-                String uuid = service.getUuid().toString().toLowerCase(Locale.getDefault());
-                String name = BleNamesResolver.resolveServiceName(uuid);
-                if (name=="Urology service"){
-                    for(BluetoothGattCharacteristic ch : chars) {
-                        String uuidC = ch.getUuid().toString().toLowerCase(Locale.getDefault());
-                        String nameC = BleNamesResolver.resolveCharacteristicName(uuid);
-                        mDeviceStatus.append(nameC+"\n");
-                    }
-                }}
-        });
-    }
-
-
-    public void uiCharacteristicsDetails(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic characteristic) {
-
-    }
-
-    public void uiNewValueForCharacteristic(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, String strValue, int intValue, byte[] rawValue, String timestamp) {
-
-    }
-
-
-    public void uiGotNotification(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic characteristic) {
-
-    }
-
-    public void uiSuccessfulWrite(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, final String description) {
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), "Writing to " + description + " was finished successfully!", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public void uiFailedWrite(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, final String description) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), "Writing to " + description + " FAILED!", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    public void uiNewRssiAvailable(BluetoothGatt gatt, BluetoothDevice device, final int rssi) {
-
-    }
 }
