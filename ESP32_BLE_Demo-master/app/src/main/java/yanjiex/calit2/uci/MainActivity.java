@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,9 @@ import org.bluetooth.bledemo.ServicesListAdapter;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
+
+import static java.util.UUID.fromString;
 
 public class MainActivity extends Activity {
     public static final String EXTRAS_DEVICE_NAME    = "BLE_DEVICE_NAME";
@@ -49,6 +53,61 @@ public class MainActivity extends Activity {
     private TextView mHeaderTitle;
     private TextView mHeaderBackButton;
 
+    Button tareBtn;
+    Button zeroCalibrateBtn;
+    Button hundredCalibrateBtn;
+
+
+    final UUID URO_SERV = fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
+    final UUID TARE_CH  = fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
+
+    //PUT ALL VIEW HERE
+    public void getViews(){
+        mDeviceAddressView = (TextView) findViewById(R.id.Device_Rssi);
+        mDeviceStatus = (TextView) findViewById(R.id.Device_Info);
+        tareBtn = (Button) findViewById(R.id.Main_tare);
+        zeroCalibrateBtn = (Button) findViewById(R.id.Main_SetZero);
+        hundredCalibrateBtn = (Button) findViewById(R.id.Main_SetHund);
+
+        tareBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String calibV = "0x25";
+                byte[] callibrateData = parseHexStringToBytes(calibV);
+                if (mBleWrapper!=null){
+                    BluetoothGatt gatt = mBleWrapper.getGatt();
+                    BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
+                    mBleWrapper.writeDataToCharacteristic(c, callibrateData);
+                }
+
+            }
+        });
+        zeroCalibrateBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String calibV = "0x24";
+                byte[] callibrateData = parseHexStringToBytes(calibV);
+                if (mBleWrapper!=null){
+                    BluetoothGatt gatt = mBleWrapper.getGatt();
+                    BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
+                    mBleWrapper.writeDataToCharacteristic(c, callibrateData);
+                }
+            }
+        });
+
+        hundredCalibrateBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                String calibV = "0x23";
+                byte[] callibrateData = parseHexStringToBytes(calibV);
+                if (mBleWrapper!=null){
+                    BluetoothGatt gatt = mBleWrapper.getGatt();
+                    BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
+                    mBleWrapper.writeDataToCharacteristic(c, callibrateData);
+                }
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -76,12 +135,22 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getViews(){
-//        mDeviceNameView = (TextView) findViewById(R.id.peripheral_name);
-        mDeviceAddressView = (TextView) findViewById(R.id.Device_Rssi);
-//        mDeviceRssiView = (TextView) findViewById(R.id.peripheral_rssi);
-        mDeviceStatus = (TextView) findViewById(R.id.Device_Info);
+
+    public byte[] parseHexStringToBytes(final String hex) {
+        String tmp = hex.substring(2).replaceAll("[^[0-9][a-f]]", "");
+        byte[] bytes = new byte[tmp.length() / 2]; // every two letters in the string are one byte finally
+
+        String part = "";
+
+        for(int i = 0; i < bytes.length; ++i) {
+            part = "0x" + tmp.substring(i*2, i*2+2);
+            bytes[i] = Long.decode(part).byteValue();
+        }
+
+        return bytes;
     }
+
+
 
 
     @Override
