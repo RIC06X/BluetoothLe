@@ -24,6 +24,10 @@
         "source": "/Users/yanjie/.android/build-cache/de21c500c1b6ac0856838d0b13bdcbca5561e221/output/res/layout/abc_action_bar_title_item.xml"
     },
     {
+        "merged": "/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/res/merged/debug/layout/activity_threshold.xml",
+        "source": "/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/res/layout/activity_threshold.xml"
+    },
+    {
         "merged": "/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
         "source": "/Users/yanjie/.android/build-cache/de21c500c1b6ac0856838d0b13bdcbca5561e221/output/res/layout/abc_alert_dialog_button_bar_material.xml"
     },

@@ -97,7 +97,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.0"
-        sha1="2af3c26235c14fe4c668ee64a2abcab75be565e3">
+        sha1="2bba3a6cff509d943a19c549e79c46411841f1e5">
         <dex dex="/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_809d1d98fb3755957b0290cf9a03f34d00d0b0d3/classes.dex" />
     </item>
     <item

@@ -1,4 +1,4 @@
-#Wed Feb 07 18:17:20 PST 2018
+#Thu Feb 15 21:48:01 PST 2018
 base.0=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_6
 renamed.0=classes.dex
 file.0=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_6/classes.dex

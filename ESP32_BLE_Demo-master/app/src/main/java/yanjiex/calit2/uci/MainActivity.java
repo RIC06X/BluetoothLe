@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
     public static final String EXTRAS_DEVICE_NAME    = "BLE_DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "BLE_DEVICE_ADDRESS";
     public static final String EXTRAS_DEVICE_RSSI    = "BLE_DEVICE_RSSI";
+    public static final int REQUEST_CODE = 1111;
 
     private String mDeviceName;
     private String mDeviceAddress;
@@ -126,10 +127,11 @@ public class MainActivity extends Activity {
         switch(item.getItemId()) {
             case R.id.main_pairing:
                 Intent intent = new Intent(this, ScanningActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE);
                 return true;
-            case R.id.device_disconnect:
-                mBleWrapper.diconnect();
+            case R.id.main_setting:
+                Intent intent2 = new Intent(this, Settings.class);
+                startActivity(intent2);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -159,11 +161,24 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         getViews();
-        final Intent intent = getIntent();
-        if (intent!=null){
-                mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
-                mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
-                mDeviceRSSI = intent.getIntExtra(EXTRAS_DEVICE_RSSI, 0) + " db";
+//        final Intent intent = getIntent();
+//        if (intent!=null){
+//                mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
+//                mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+//                mDeviceRSSI = intent.getIntExtra(EXTRAS_DEVICE_RSSI, 0) + " db";
+//        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+         case REQUEST_CODE:
+            if (data!=null){
+                mDeviceName = data.getStringExtra(EXTRAS_DEVICE_NAME);
+                mDeviceAddress = data.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+                mDeviceRSSI = data.getIntExtra(EXTRAS_DEVICE_RSSI, 0) + " db";
+            }
+            Log.d("OnResult","YES");
         }
     }
 

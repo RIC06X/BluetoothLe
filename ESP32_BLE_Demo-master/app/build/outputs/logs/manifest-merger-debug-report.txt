@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-51:12
+ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-57:12
 	package
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:3:5-36
 		INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml
@@ -59,7 +59,7 @@ ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/sr
 	android:name
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:20:22-77
 application
-ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:22:5-49:19
+ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:22:5-55:19
 MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.android/build-cache/de21c500c1b6ac0856838d0b13bdcbca5561e221/output/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.android/build-cache/5661ab61170258a4c7675dd7a09ced02563c00f3/output/AndroidManifest.xml:7:5-20
 MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.android/build-cache/6b4d3bb62ed14815ca9b08c816b71f9bbdc5d88e/output/AndroidManifest.xml:7:5-20
@@ -70,11 +70,11 @@ MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanj
 	android:allowBackup
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:23:9-35
 	android:icon
-		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:24:9-45
+		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:24:9-43
 	android:theme
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:27:9-40
 	android:logo
-		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:26:9-45
+		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:26:9-43
 activity#yanjiex.calit2.uci.MainActivity
 ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:28:9-34:20
 	android:name
@@ -94,7 +94,7 @@ ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/sr
 	android:screenOrientation
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:39:13-49
 	android:label
-		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:38:13-45
+		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:38:13-33
 	android:name
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:37:13-45
 activity#org.bluetooth.bledemo.PeripheralActivity
@@ -107,3 +107,11 @@ ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/sr
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:46:13-52
 	android:name
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:43:13-47
+activity#yanjiex.calit2.uci.Settings
+ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:49:9-53:20
+	android:screenOrientation
+		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:52:13-49
+	android:label
+		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:51:13-37
+	android:name
+		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:50:13-55
