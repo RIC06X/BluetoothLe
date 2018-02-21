@@ -13,20 +13,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.bluetooth.bledemo.BleDefinedUUIDs;
+import com.robinhood.spark.SparkAdapter;
+import com.robinhood.spark.SparkView;
+
 import org.bluetooth.bledemo.BleNamesResolver;
 import org.bluetooth.bledemo.BleWrapper;
 import org.bluetooth.bledemo.BleWrapperUiCallbacks;
-import org.bluetooth.bledemo.CharacteristicDetailsAdapter;
-import org.bluetooth.bledemo.CharacteristicsListAdapter;
-import org.bluetooth.bledemo.PeripheralActivity;
 import org.bluetooth.bledemo.R;
 import org.bluetooth.bledemo.ScanningActivity;
-import org.bluetooth.bledemo.ServicesListAdapter;
 
 import java.util.List;
 import java.util.Locale;
@@ -53,11 +50,14 @@ public class MainActivity extends Activity {
     private View mListViewHeader;
     private TextView mHeaderTitle;
     private TextView mHeaderBackButton;
+    private SparkView sparkView;
 
     Button tareBtn;
     Button zeroCalibrateBtn;
     Button hundredCalibrateBtn;
 
+    private sensorUpdateAdpter sparkAdapter;
+    private TextView scrubInfoTextView;
 
     final UUID URO_SERV = fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
     final UUID TARE_CH  = fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
@@ -69,7 +69,9 @@ public class MainActivity extends Activity {
         tareBtn = (Button) findViewById(R.id.Main_tare);
         zeroCalibrateBtn = (Button) findViewById(R.id.Main_SetZero);
         hundredCalibrateBtn = (Button) findViewById(R.id.Main_SetHund);
+        scrubInfoTextView = (TextView) findViewById(R.id.info_textview);
 
+        sparkView = (SparkView) findViewById(R.id.sparkview);
         tareBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -109,6 +111,7 @@ public class MainActivity extends Activity {
             }
         });
     }
+    //Create menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -122,6 +125,7 @@ public class MainActivity extends Activity {
         return true;
     }
 
+    //Menu opetion select
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -137,7 +141,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    //used for processing sending strings
     public byte[] parseHexStringToBytes(final String hex) {
         String tmp = hex.substring(2).replaceAll("[^[0-9][a-f]]", "");
         byte[] bytes = new byte[tmp.length() / 2]; // every two letters in the string are one byte finally
@@ -154,21 +158,22 @@ public class MainActivity extends Activity {
 
 
 
-
+    // Set views and get views
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         getViews();
-//        final Intent intent = getIntent();
-//        if (intent!=null){
-//                mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
-//                mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
-//                mDeviceRSSI = intent.getIntExtra(EXTRAS_DEVICE_RSSI, 0) + " db";
-//        }
+        //Set the graphing adpater
+        sparkAdapter = new sensorUpdateAdpter();
+        sparkView.setAdapter(sparkAdapter);
+        setScrubHandler(sparkView);
+
     }
 
+
+    // Retrive device info from Scanning activity.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
@@ -181,7 +186,7 @@ public class MainActivity extends Activity {
             Log.d("OnResult","YES");
         }
     }
-
+    float mFloatValue;   //TODO VERY IMPORTANT DATA INPUT!!
     @Override
     protected void onResume() {
         super.onResume();
@@ -294,7 +299,7 @@ public class MainActivity extends Activity {
             }
 
             //CRUCIAL IMPORTANT
-            float mFloatValue;
+
             @Override
             public void uiNewValueForCharacteristic(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, String strValue, int intValue, byte[] rawValue, String timestamp) {
                 Log.d("BLE WRAPPER", "got new Value");
@@ -304,6 +309,8 @@ public class MainActivity extends Activity {
                     @Override
                     public void run() {
                         mDeviceAddressView.setText(String.format("%f",mFloatValue)+" g");
+                        //sparkAdapter.sensorUpdate(mFloatValue);
+                        sparkAdapter.updateInfo(mFloatValue);
                     }
                 });
             }
@@ -347,5 +354,51 @@ public class MainActivity extends Activity {
 
     }
 
+//---------------------------------the code below is the graph view adpter---------------------------
+    private void setScrubHandler(SparkView sparkView) {
 
+        sparkView.setScrubListener(new SparkView.OnScrubListener() {
+            @Override
+            public void onScrubbed(Object value) {
+                if (value == null) {
+                    scrubInfoTextView.setText(getString(R.string.scrub_format, value));
+                } else {
+                    scrubInfoTextView.setText(getString(R.string.scrub_format, value));
+                }
+            }
+        });
+    }
+
+    public static class sensorUpdateAdpter extends SparkAdapter{
+        private float[] yData;
+
+        public sensorUpdateAdpter() {
+            yData = new float[50];
+            notifyDataSetChanged();
+        }
+
+        public void updateInfo(float number) {
+            int count = yData.length;
+            for (int i = 0; i < count-1; i++) {
+                yData[i] = yData[i + 1];
+            }
+            yData[count -1] = number;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return yData.length;
+        }
+
+        @Override
+        public Object getItem(int index) {
+            return yData[index];
+        }
+
+        @Override
+        public float getY(int index) {
+            return yData[index];
+        }
+    }
 }

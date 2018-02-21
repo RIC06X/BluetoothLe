@@ -1,6 +1,18 @@
 -- Merging decision tree log ---
 manifest
 ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-57:12
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/e109beea9d2c316b8b8ccd82230dec6f/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/59b7e22dcd4fcf0a2e4f4cf2abf6c1a2/AndroidManifest.xml:2:1-9:12
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/5e30688e86fc73f5ccf577bb046a0958/AndroidManifest.xml:2:1-9:12
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/57dffbbe4906e110e0da5becd0ac7a59/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/707bdff2b4677f5d84041130fdf0e7de/AndroidManifest.xml:2:1-11:12
+MERGED from [com.robinhood.spark:spark:1.2.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/spark-1.2.0.aar/9c56b0f989e8420b9bee3bd34417e914/AndroidManifest.xml:2:1-10:12
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-57:12
 	package
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:3:5-36
 		INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml
@@ -9,21 +21,32 @@ ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/sr
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:5:5-30
 		INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:11-69
 	android:versionCode
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:4:5-28
 		INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml
-	xmlns:android
-		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:11-69
 uses-sdk
 ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
-MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.android/build-cache/de21c500c1b6ac0856838d0b13bdcbca5561e221/output/AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.android/build-cache/5661ab61170258a4c7675dd7a09ced02563c00f3/output/AndroidManifest.xml:5:5-44
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.android/build-cache/6b4d3bb62ed14815ca9b08c816b71f9bbdc5d88e/output/AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.android/build-cache/3d9553b1b4622666bcf302c41a5b6811f35c0093/output/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.android/build-cache/2669c4d3dd46d3da6cea03fdba83bdf0228119ae/output/AndroidManifest.xml:5:5-7:41
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/e109beea9d2c316b8b8ccd82230dec6f/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/e109beea9d2c316b8b8ccd82230dec6f/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/59b7e22dcd4fcf0a2e4f4cf2abf6c1a2/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/59b7e22dcd4fcf0a2e4f4cf2abf6c1a2/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/5e30688e86fc73f5ccf577bb046a0958/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/5e30688e86fc73f5ccf577bb046a0958/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/57dffbbe4906e110e0da5becd0ac7a59/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/57dffbbe4906e110e0da5becd0ac7a59/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/707bdff2b4677f5d84041130fdf0e7de/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/707bdff2b4677f5d84041130fdf0e7de/AndroidManifest.xml:5:5-7:41
+MERGED from [com.robinhood.spark:spark:1.2.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/spark-1.2.0.aar/9c56b0f989e8420b9bee3bd34417e914/AndroidManifest.xml:6:5-8:41
+MERGED from [com.robinhood.spark:spark:1.2.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/spark-1.2.0.aar/9c56b0f989e8420b9bee3bd34417e914/AndroidManifest.xml:6:5-8:41
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
+INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
 	tools:overrideLibrary
-		ADDED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.android/build-cache/de21c500c1b6ac0856838d0b13bdcbca5561e221/output/AndroidManifest.xml:23:9-75
+		ADDED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/e109beea9d2c316b8b8ccd82230dec6f/AndroidManifest.xml:23:9-75
 	android:targetSdkVersion
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:9:9-38
 		INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml
@@ -60,17 +83,22 @@ ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/sr
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:20:22-77
 application
 ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:22:5-55:19
-MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.android/build-cache/de21c500c1b6ac0856838d0b13bdcbca5561e221/output/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.android/build-cache/5661ab61170258a4c7675dd7a09ced02563c00f3/output/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.android/build-cache/6b4d3bb62ed14815ca9b08c816b71f9bbdc5d88e/output/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.android/build-cache/3d9553b1b4622666bcf302c41a5b6811f35c0093/output/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.android/build-cache/2669c4d3dd46d3da6cea03fdba83bdf0228119ae/output/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/e109beea9d2c316b8b8ccd82230dec6f/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/e109beea9d2c316b8b8ccd82230dec6f/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/59b7e22dcd4fcf0a2e4f4cf2abf6c1a2/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/59b7e22dcd4fcf0a2e4f4cf2abf6c1a2/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/5e30688e86fc73f5ccf577bb046a0958/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/5e30688e86fc73f5ccf577bb046a0958/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/57dffbbe4906e110e0da5becd0ac7a59/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/57dffbbe4906e110e0da5becd0ac7a59/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/707bdff2b4677f5d84041130fdf0e7de/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/707bdff2b4677f5d84041130fdf0e7de/AndroidManifest.xml:9:5-20
 	android:label
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:25:9-41
-	android:allowBackup
-		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:23:9-35
 	android:icon
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:24:9-43
+	android:allowBackup
+		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:23:9-35
 	android:theme
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:27:9-40
 	android:logo

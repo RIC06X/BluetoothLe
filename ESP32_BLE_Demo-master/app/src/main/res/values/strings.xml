@@ -20,6 +20,7 @@
     <string name="threshold_title">Please enter the threshold for each level in an increasing order</string>
     <string name="lb">lb</string>
 
+    <string name="scrub_format">Force intensity: %1$s</string>
 
     <string-array name="sound_array">
         <item> 0 </item>

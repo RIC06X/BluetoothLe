@@ -1,25 +1,4 @@
-#Thu Feb 15 21:48:00 PST 2018
-renamed.7=classes5.dex
-renamed.6=classes3.dex
-renamed.5=classes2.dex
-renamed.4=classes4.dex
-renamed.3=classes6.dex
-renamed.2=classes.dex
-renamed.1=classes7.dex
-renamed.0=classes8.dex
-base.7=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_9a7c185299120c60c3dcafaf2933758a9519c5f6
-base.6=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/constraint-layout-solver-1.0.2_ea8aeb0047400b093a5325c06e926a74ff29f7a9
-base.5=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6553038a64565999d57eb30e1ca15706dc137fdf
-base.4=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.4.0_33a3111b2116fbdd4d13f69436d1443547f2812c
-base.3=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_77d6405f27397a113ae971b5ef099e4e95ad81fe
-base.2=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4f714adc11d4ad7d7c08025f87d7b6655f48ded8
-base.1=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1fb1e8031ae66dd22376729362528ff3a5a19190
-base.0=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6c7dc45fa468191c61ba05c44c7df4e116c1f502
-file.7=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_9a7c185299120c60c3dcafaf2933758a9519c5f6/classes.dex
-file.6=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/constraint-layout-solver-1.0.2_ea8aeb0047400b093a5325c06e926a74ff29f7a9/classes.dex
-file.5=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6553038a64565999d57eb30e1ca15706dc137fdf/classes.dex
-file.4=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.4.0_33a3111b2116fbdd4d13f69436d1443547f2812c/classes.dex
-file.3=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_77d6405f27397a113ae971b5ef099e4e95ad81fe/classes.dex
-file.2=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_4f714adc11d4ad7d7c08025f87d7b6655f48ded8/classes.dex
-file.1=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_1fb1e8031ae66dd22376729362528ff3a5a19190/classes.dex
-file.0=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6c7dc45fa468191c61ba05c44c7df4e116c1f502/classes.dex
+#Wed Feb 21 13:54:27 PST 2018
+base.0=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dexMerger/debug/10
+path.0=classes.dex
+renamed.0=classes.dex
