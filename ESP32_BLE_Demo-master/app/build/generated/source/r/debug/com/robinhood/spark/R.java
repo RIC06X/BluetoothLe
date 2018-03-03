@@ -34,9 +34,9 @@ public final class R {
     }
     public static final class id {
         public static final int down = 0x7f080048;
-        public static final int none = 0x7f08006c;
-        public static final int towardZero = 0x7f0800ca;
-        public static final int up = 0x7f0800cb;
+        public static final int none = 0x7f08006b;
+        public static final int towardZero = 0x7f0800c8;
+        public static final int up = 0x7f0800c9;
     }
     public static final class style {
         public static final int spark_SparkView = 0x7f0e0140;

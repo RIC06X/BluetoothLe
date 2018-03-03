@@ -271,12 +271,12 @@ public class CharacteristicDetailsAdapter extends BaseAdapter {
         fields.zeroCalibrateBtn.setEnabled((props & (BluetoothGattCharacteristic.PROPERTY_WRITE | BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE)) != 0);
 		fields.saveCalibrateBtn.setEnabled((props & (BluetoothGattCharacteristic.PROPERTY_WRITE | BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE)) != 0);
 		fields.callibrateBtn.setEnabled(false);
-        //fields.charHexValue.setEnabled(fields.writeBtn.isEnabled());
 
+        //fields.charHexValue.setEnabled(fields.writeBtn.isEnabled());
 		//fields.charHexValue.setText(mAsciiValue);
 		//fields.charStrValue.setText(mStrValue);
-
 		//Do not delete these part
+
 		if (mRawValue==null){
 			fields.charDecValue.setText("");
 		}else

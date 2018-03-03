@@ -70,14 +70,14 @@ public class MainActivity extends Activity {
         zeroCalibrateBtn = (Button) findViewById(R.id.Main_SetZero);
         hundredCalibrateBtn = (Button) findViewById(R.id.Main_SetHund);
         scrubInfoTextView = (TextView) findViewById(R.id.info_textview);
-
         sparkView = (SparkView) findViewById(R.id.sparkview);
+
         tareBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 String calibV = "0x25";
                 byte[] callibrateData = parseHexStringToBytes(calibV);
-                if (mBleWrapper!=null){
+                if (mBleWrapper.isConnected()){
                     BluetoothGatt gatt = mBleWrapper.getGatt();
                     BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
                     mBleWrapper.writeDataToCharacteristic(c, callibrateData);
@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
             public void onClick(View v){
                 String calibV = "0x24";
                 byte[] callibrateData = parseHexStringToBytes(calibV);
-                if (mBleWrapper!=null){
+                if (mBleWrapper.isConnected()){
                     BluetoothGatt gatt = mBleWrapper.getGatt();
                     BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
                     mBleWrapper.writeDataToCharacteristic(c, callibrateData);
@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
             public void onClick(View v){
                 String calibV = "0x23";
                 byte[] callibrateData = parseHexStringToBytes(calibV);
-                if (mBleWrapper!=null){
+                if (mBleWrapper.isConnected()){
                     BluetoothGatt gatt = mBleWrapper.getGatt();
                     BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
                     mBleWrapper.writeDataToCharacteristic(c, callibrateData);
@@ -115,13 +115,13 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        if (mBleWrapper.isConnected()) {
-            menu.findItem(R.id.main_pairing).setVisible(false);
-            menu.findItem(R.id.main_disconnect).setVisible(true);
-        } else {
-            menu.findItem(R.id.main_pairing).setVisible(true);
-            menu.findItem(R.id.main_disconnect).setVisible(false);
-        }
+//        if (mBleWrapper.isConnected()) {
+//            menu.findItem(R.id.main_pairing).setVisible(false);
+//            menu.findItem(R.id.main_disconnect).setVisible(true);
+//        } else {
+//            menu.findItem(R.id.main_pairing).setVisible(true);
+//            menu.findItem(R.id.main_disconnect).setVisible(false);
+//        }
         return true;
     }
 
@@ -134,8 +134,25 @@ public class MainActivity extends Activity {
                 startActivityForResult(intent, REQUEST_CODE);
                 return true;
             case R.id.main_setting:
-                Intent intent2 = new Intent(this, Settings.class);
-                startActivity(intent2);
+                if (mBleWrapper.isConnected()){
+                    Intent intent2 = new Intent(this, Settings.class);
+                    intent2.putExtra(EXTRAS_DEVICE_NAME, mDeviceName);
+                    intent2.putExtra(EXTRAS_DEVICE_ADDRESS, mDeviceAddress);
+                    startActivity(intent2);
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "You have no device connected", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.main_disconnect:
+                Log.d("On Menu disconnect","");
+                if (mBleWrapper.isConnected()){
+                    Log.d("On Menu disconnect","true");
+                    mBleWrapper.diconnect();
+                    mBleWrapper.close();
+                    mDeviceStatus.setText("Disconnected");
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "You have no device connected", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -181,9 +198,7 @@ public class MainActivity extends Activity {
             if (data!=null){
                 mDeviceName = data.getStringExtra(EXTRAS_DEVICE_NAME);
                 mDeviceAddress = data.getStringExtra(EXTRAS_DEVICE_ADDRESS);
-                mDeviceRSSI = data.getIntExtra(EXTRAS_DEVICE_RSSI, 0) + " db";
             }
-            Log.d("OnResult","YES");
         }
     }
     float mFloatValue;   //TODO VERY IMPORTANT DATA INPUT!!
@@ -213,7 +228,7 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mDeviceStatus.setText("disconnected\n");
+                        mDeviceStatus.setText("Disconnected\n");
                         Log.d("Device Disconnected","YES");
                     }
                 });
@@ -230,7 +245,7 @@ public class MainActivity extends Activity {
                             String name = BleNamesResolver.resolveServiceName(uuid);
                             String type = (service.getType() == BluetoothGattService.SERVICE_TYPE_PRIMARY) ? "Primary" : "Secondary";
                             if (name=="Urology service"){
-                                mDeviceStatus.append(name+"\n");
+                                //mDeviceStatus.append(name+"\n");
                                 uiCharacteristicForService(gatt,device,service,service.getCharacteristics());
                             }
                         }
@@ -250,7 +265,7 @@ public class MainActivity extends Activity {
                             for(BluetoothGattCharacteristic ch : chars) {
                                 String uuidC = ch.getUuid().toString().toLowerCase(Locale.getDefault());
                                 String nameC = BleNamesResolver.resolveCharacteristicName(uuidC);
-                                mDeviceStatus.append(nameC+"\n");
+                                //mDeviceStatus.append(nameC+"\n");
                                 uiCharacteristicsDetails(gatt,device,service,ch);
                                 //AUTO READ, CAN BE disabled
                                 if (nameC == "Weight"){
@@ -308,7 +323,11 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mDeviceAddressView.setText(String.format("%f",mFloatValue)+" g");
+                        if (mFloatValue>1000 || mFloatValue < 0){
+                            mDeviceAddressView.setText("Warning!! weight out of bound: "+ String.format("%f",mFloatValue)+" g");
+                        }
+                        else
+                            mDeviceAddressView.setText(String.format("%f",mFloatValue)+" g");
                         //sparkAdapter.sensorUpdate(mFloatValue);
                         sparkAdapter.updateInfo(mFloatValue);
                     }
@@ -349,11 +368,20 @@ public class MainActivity extends Activity {
         if(mBleWrapper.initialize() == false) {
             finish();
         }
-        mDeviceStatus.setText("connecting ...");
+        mDeviceStatus.setText("Disconnected");
         mBleWrapper.connect(mDeviceAddress);
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("On Pause","YES");
+        if (mBleWrapper.isConnected()){
+            mBleWrapper.diconnect();
+            mBleWrapper.close();
+        }
+    };
 //---------------------------------the code below is the graph view adpter---------------------------
     private void setScrubHandler(SparkView sparkView) {
 
@@ -361,13 +389,14 @@ public class MainActivity extends Activity {
             @Override
             public void onScrubbed(Object value) {
                 if (value == null) {
-                    scrubInfoTextView.setText(getString(R.string.scrub_format, value));
+                    scrubInfoTextView.setText("Tap and hold to see the value ");
                 } else {
                     scrubInfoTextView.setText(getString(R.string.scrub_format, value));
                 }
             }
         });
     }
+
 
     public static class sensorUpdateAdpter extends SparkAdapter{
         private float[] yData;
@@ -384,6 +413,16 @@ public class MainActivity extends Activity {
             }
             yData[count -1] = number;
             notifyDataSetChanged();
+        }
+
+        @Override
+        public boolean hasBaseLine() {
+            return true;
+        }
+
+        @Override
+        public float getBaseLine() {
+            return 0;
         }
 
         @Override

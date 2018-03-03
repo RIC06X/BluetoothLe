@@ -42,6 +42,7 @@ public class ScanningActivity extends ListActivity {
         if(mBleWrapper.checkBleHardwareAvailable() == false) {
         	bleMissing();
         }
+
     }
 
     @Override

@@ -1,6 +1,6 @@
 #Internal package file, do not edit.
-#Wed Feb 21 15:02:43 PST 2018
-2.base=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dexMerger/debug/16
+#Tue Feb 27 13:31:57 PST 2018
+2.base=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dexMerger/debug/17
 5.set=DEX
 0.path=classes.dex
 2.baseType=DIRECTORY
@@ -22,6 +22,6 @@ count=6
 0.base=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dexMerger/debug/13
 0.baseType=DIRECTORY
 3.set=DEX
-1.base=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dexMerger/debug/11
+1.base=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dexMerger/debug/16
 4.baseType=DIRECTORY
 0.set=DEX
