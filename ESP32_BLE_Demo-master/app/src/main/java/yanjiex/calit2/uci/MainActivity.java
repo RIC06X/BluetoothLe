@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -309,6 +310,13 @@ public class MainActivity extends Activity {
             public void uiCharacteristicsDetails(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic characteristic) {
                 byte[] mRawValue= characteristic.getValue();
                 final float mFloatValue = resolveByteFloat(mRawValue);
+                if (mFloatValue > 1000){
+                    setScreencolor(Color.parseColor("#ef5350"));
+
+                }
+                if (mFloatValue > 800){
+                    setScreencolor(Color.parseColor("#ffca28"));
+                }
                 Log.d(LOGTAG, "uiCharacteristicsDetails: " + mFloatValue);
 
             }
@@ -330,6 +338,23 @@ public class MainActivity extends Activity {
                             mDeviceAddressView.setText(String.format("%f",mFloatValue)+" g");
                         //sparkAdapter.sensorUpdate(mFloatValue);
                         sparkAdapter.updateInfo(mFloatValue);
+                        if (mFloatValue > 1000){
+                            setScreencolor(Color.parseColor("#b61827"));
+                        }
+                        else if (mFloatValue > 800 && mFloatValue <= 1000){
+                            setScreencolor(Color.parseColor("#ef5350"));
+                        }
+                        else if (mFloatValue > 500 && mFloatValue <= 800){
+                            setScreencolor(Color.parseColor("#ffca28"));
+                        }
+                        else if (mFloatValue < 500 && mFloatValue >= 3){
+                            setScreencolor(Color.parseColor("#aed581"));
+                        }
+                        else if (mFloatValue < 3 && mFloatValue >= 0){
+                            setScreencolor(Color.parseColor("#ffffff"));
+                        }
+
+
                     }
                 });
             }
@@ -383,6 +408,11 @@ public class MainActivity extends Activity {
         }
     };
 //---------------------------------the code below is the graph view adpter---------------------------
+
+    private void setScreencolor(int color){
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(color);
+    }
     private void setScrubHandler(SparkView sparkView) {
 
         sparkView.setScrubListener(new SparkView.OnScrubListener() {
