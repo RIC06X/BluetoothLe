@@ -25,7 +25,6 @@
         android:icon="@mipmap/ic_launcher"
         android:label="BluetoothLE_Test"
         android:logo="@mipmap/ic_launcher"
-        android:testOnly="true"
         android:theme="@style/AppTheme" >
         <activity android:name="yanjiex.calit2.uci.MainActivity" >
             <intent-filter>

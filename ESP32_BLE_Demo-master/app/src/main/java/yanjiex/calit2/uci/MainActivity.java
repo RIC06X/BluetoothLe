@@ -5,8 +5,10 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.robinhood.spark.SparkAdapter;
 import com.robinhood.spark.SparkView;
@@ -25,11 +29,25 @@ import org.bluetooth.bledemo.BleWrapper;
 import org.bluetooth.bledemo.BleWrapperUiCallbacks;
 import org.bluetooth.bledemo.R;
 import org.bluetooth.bledemo.ScanningActivity;
+import org.w3c.dom.ls.LSException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import static android.content.ContentValues.TAG;
 import static java.util.UUID.fromString;
 
 public class MainActivity extends Activity {
@@ -40,22 +58,17 @@ public class MainActivity extends Activity {
 
     private String mDeviceName;
     private String mDeviceAddress;
-    private String mDeviceRSSI;
 
     private BleWrapper mBleWrapper;
 
-    private TextView mDeviceNameView;
     private TextView mDeviceAddressView;
-    private TextView mDeviceRssiView;
     private TextView mDeviceStatus;
-    private View mListViewHeader;
-    private TextView mHeaderTitle;
-    private TextView mHeaderBackButton;
     private SparkView sparkView;
 
     Button tareBtn;
     Button zeroCalibrateBtn;
     Button hundredCalibrateBtn;
+    ToggleButton startWriteBtn;
 
     private sensorUpdateAdpter sparkAdapter;
     private TextView scrubInfoTextView;
@@ -63,13 +76,27 @@ public class MainActivity extends Activity {
     final UUID URO_SERV = fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
     final UUID TARE_CH  = fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
 
-    //PUT ALL VIEW HERE
+    Boolean isHeader = true;
+    Boolean isWriting = false;
+    boolean MeasureStart;
+    String filename;
+
+    FileOutputStream outputStream;
+    File file;
+    File tempfile;
+
+
     public void getViews(){
         mDeviceAddressView = (TextView) findViewById(R.id.Device_Rssi);
         mDeviceStatus = (TextView) findViewById(R.id.Device_Info);
         tareBtn = (Button) findViewById(R.id.Main_tare);
+        //not useful
         zeroCalibrateBtn = (Button) findViewById(R.id.Main_SetZero);
         hundredCalibrateBtn = (Button) findViewById(R.id.Main_SetHund);
+        //not useful
+
+        startWriteBtn = (ToggleButton) findViewById(R.id.writeFile);
+
         scrubInfoTextView = (TextView) findViewById(R.id.info_textview);
         sparkView = (SparkView) findViewById(R.id.sparkview);
 
@@ -84,6 +111,63 @@ public class MainActivity extends Activity {
                     mBleWrapper.writeDataToCharacteristic(c, callibrateData);
                 }
 
+            }
+        });
+
+
+        startWriteBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked){
+                    Context context = getApplicationContext();
+                    if (isExternalStorageReadable() && isExternalStorageWritable()){
+                        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Urology_Data";
+                        File dir = new File(path);
+                        dir.mkdirs();
+                        filename = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".csv";
+                        file = new File(path + "/" + filename);
+
+                        tempfile = new File(context.getFilesDir(), "tempData.txt");
+                        try {
+                            file.createNewFile();
+                            file.setWritable(true);
+                            tempfile.createNewFile();
+                            tempfile.setWritable(true);
+                            if (isHeader){
+                                outputStream = openFileOutput("tempData.txt", MODE_APPEND);
+                                outputStream.write("Experimental Time (Seconds),Absolute Time (Unix Epoch Seconds),Measurement (Newtons)\n".getBytes());
+                                outputStream.flush();
+                                isHeader = false;
+                                isWriting = true;
+                                MeasureStart = true;
+                                outputStream.close();
+                                Toast.makeText(getApplicationContext(),"Starting writing to "+filename, Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    else{
+
+                        Toast.makeText(getApplicationContext(),"Failed to create new file, please check external storage space", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+                else{
+                    isWriting = false;
+                    isHeader = true;
+                    startTime = 0;
+                    try{
+                        copy(tempfile,file);
+                        tempfile.delete();
+                        Toast.makeText(getApplicationContext(),"File saved", Toast.LENGTH_LONG).show();
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
             }
         });
         zeroCalibrateBtn.setOnClickListener(new View.OnClickListener(){
@@ -116,13 +200,6 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-//        if (mBleWrapper.isConnected()) {
-//            menu.findItem(R.id.main_pairing).setVisible(false);
-//            menu.findItem(R.id.main_disconnect).setVisible(true);
-//        } else {
-//            menu.findItem(R.id.main_pairing).setVisible(true);
-//            menu.findItem(R.id.main_disconnect).setVisible(false);
-//        }
         return true;
     }
 
@@ -326,8 +403,12 @@ public class MainActivity extends Activity {
             @Override
             public void uiNewValueForCharacteristic(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, String strValue, int intValue, byte[] rawValue, String timestamp) {
                 Log.d("BLE WRAPPER", "got new Value");
-                 mFloatValue= resolveByteFloat(rawValue);
+                mFloatValue= resolveByteFloat(rawValue);
                 Log.d(LOGTAG, "uiCharacteristicsDetails: " + mFloatValue);
+                if (isWriting){
+                    writeTofile("tempData.txt", mFloatValue);
+                    Log.d("WRITE__FILE", "IS WRITING");
+                }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -335,7 +416,8 @@ public class MainActivity extends Activity {
                             mDeviceAddressView.setText("Warning!! weight out of bound: "+ String.format("%f",mFloatValue)+" g");
                         }
                         else
-                            mDeviceAddressView.setText(String.format("%f",mFloatValue)+" g");
+                            mDeviceAddressView.setText(String.format("%.2f",mFloatValue)+" g     "+
+                                                       String.format("%.2f",mFloatValue*0.0098066500286389)+" Newton");
                         //sparkAdapter.sensorUpdate(mFloatValue);
                         sparkAdapter.updateInfo(mFloatValue);
                         if (mFloatValue > 1000){
@@ -393,19 +475,75 @@ public class MainActivity extends Activity {
         if(mBleWrapper.initialize() == false) {
             finish();
         }
-        mDeviceStatus.setText("Disconnected");
+        //mDeviceStatus.setText("Disconnected");
         mBleWrapper.connect(mDeviceAddress);
+    }
 
+
+    long startTime;
+    long LastEpoch;
+    protected void writeTofile(String filename,  float data){
+        try{
+            outputStream = openFileOutput(filename, MODE_APPEND);
+            long epoch = System.currentTimeMillis()/1000;
+            if (MeasureStart){
+                startTime = epoch;
+                MeasureStart = false;
+            }
+            if (LastEpoch != epoch){
+                String inputline = Long.toString(epoch-startTime)+","+Long.toString(epoch)+","+Float.toString(data)+"\n";
+                outputStream.write(inputline.getBytes());
+                outputStream.close();
+                Log.d("IN_Writing",filename+" "+ Float.toString(data));
+                LastEpoch = epoch;
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst);
+
+        // Transfer bytes from in to out
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
+    }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.d("On Pause","YES");
-        if (mBleWrapper.isConnected()){
-            mBleWrapper.diconnect();
-            mBleWrapper.close();
-        }
+//        if (mBleWrapper.isConnected()){
+//            mBleWrapper.diconnect();
+//            mBleWrapper.close();
+//        }
     };
 //---------------------------------the code below is the graph view adpter---------------------------
 

@@ -67,6 +67,14 @@
             android:id = "@+id/Main_tare"
             android:layout_gravity="center"
             />
+
+        <ToggleButton
+            android:id="@+id/writeFile"
+            android:layout_width="172dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textOff="Write to File"
+            android:textOn="Save file" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

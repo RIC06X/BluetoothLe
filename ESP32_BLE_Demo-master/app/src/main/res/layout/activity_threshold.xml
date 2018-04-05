@@ -292,18 +292,31 @@
                 android:id="@+id/newValue5"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="new value   \n"
+                android:text="new value  "
                 android:paddingTop="4dp"
-
                 />
-
+            <EditText
+                android:id="@+id/ThreshNumInput5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal" />
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/ReadThreshold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="16dp"
+                android:text="Read Threshold"
+                />
 
             <Button
-                android:id="@+id/SaveSettings"
+                android:id="@+id/SaveThreshold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -311,16 +324,6 @@
                 android:padding="16dp"
                 android:text="Save settings"
                 />
-
-            <EditText
-                android:id="@+id/ThreshNumInput5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="75dp"
-                android:ems="10"
-                android:inputType="numberDecimal" />
 
         </RelativeLayout>
 
