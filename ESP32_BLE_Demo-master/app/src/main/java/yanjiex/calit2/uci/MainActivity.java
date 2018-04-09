@@ -73,8 +73,9 @@ public class MainActivity extends Activity {
     private sensorUpdateAdpter sparkAdapter;
     private TextView scrubInfoTextView;
 
-    final UUID URO_SERV = fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
-    final UUID TARE_CH  = fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
+    final UUID URO_SERV     =   fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
+    final UUID TARE_CH      =   fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
+    final UUID FloatData    =   fromString("4a78b8dd-a43d-46cf-9270-f6b750a717c8");
 
     Boolean isHeader = true;
     Boolean isWriting = false;
@@ -403,42 +404,39 @@ public class MainActivity extends Activity {
             @Override
             public void uiNewValueForCharacteristic(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, String strValue, int intValue, byte[] rawValue, String timestamp) {
                 Log.d("BLE WRAPPER", "got new Value");
-                mFloatValue= resolveByteFloat(rawValue);
-                Log.d(LOGTAG, "uiCharacteristicsDetails: " + mFloatValue);
-                if (isWriting){
-                    writeTofile("tempData.txt", mFloatValue);
-                    Log.d("WRITE__FILE", "IS WRITING");
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mFloatValue>1000 || mFloatValue < 0){
-                            mDeviceAddressView.setText("Warning!! weight out of bound: "+ String.format("%f",mFloatValue)+" g");
+                if (ch.getUuid().equals(FloatData)){
+                    Log.d("MainActicity: ", rawValue.toString()+"  data");
+                    mFloatValue= resolveByteFloat(rawValue);
+                    Log.d(LOGTAG, "uiCharacteristicsDetails: " + mFloatValue);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mFloatValue > 1000 || mFloatValue < 0) {
+                                mDeviceAddressView.setText("Warning!! weight out of bound: " + String.format("%f", mFloatValue) + " g");
+                            } else
+                                mDeviceAddressView.setText(String.format("%.2f", mFloatValue) + " g     " +
+                                        String.format("%.2f", mFloatValue * 0.0098066500286389) + " Newton");
+                            //sparkAdapter.sensorUpdate(mFloatValue);
+                            sparkAdapter.updateInfo(mFloatValue);
+                            if (mFloatValue > 1000) {
+                                setScreencolor(Color.parseColor("#b61827"));
+                            } else if (mFloatValue > 800 && mFloatValue <= 1000) {
+                                setScreencolor(Color.parseColor("#ef5350"));
+                            } else if (mFloatValue > 500 && mFloatValue <= 800) {
+                                setScreencolor(Color.parseColor("#ffca28"));
+                            } else if (mFloatValue < 500 && mFloatValue >= 3) {
+                                setScreencolor(Color.parseColor("#aed581"));
+                            } else if (mFloatValue < 3 && mFloatValue >= 0) {
+                                setScreencolor(Color.parseColor("#ffffff"));
+                            }
                         }
-                        else
-                            mDeviceAddressView.setText(String.format("%.2f",mFloatValue)+" g     "+
-                                                       String.format("%.2f",mFloatValue*0.0098066500286389)+" Newton");
-                        //sparkAdapter.sensorUpdate(mFloatValue);
-                        sparkAdapter.updateInfo(mFloatValue);
-                        if (mFloatValue > 1000){
-                            setScreencolor(Color.parseColor("#b61827"));
-                        }
-                        else if (mFloatValue > 800 && mFloatValue <= 1000){
-                            setScreencolor(Color.parseColor("#ef5350"));
-                        }
-                        else if (mFloatValue > 500 && mFloatValue <= 800){
-                            setScreencolor(Color.parseColor("#ffca28"));
-                        }
-                        else if (mFloatValue < 500 && mFloatValue >= 3){
-                            setScreencolor(Color.parseColor("#aed581"));
-                        }
-                        else if (mFloatValue < 3 && mFloatValue >= 0){
-                            setScreencolor(Color.parseColor("#ffffff"));
-                        }
+                    });
 
-
+                    if (isWriting){
+                        writeTofile("tempData.txt", mFloatValue);
+                        Log.d("WRITE__FILE", "IS WRITING");
                     }
-                });
+                }
             }
 
             @Override
@@ -491,7 +489,7 @@ public class MainActivity extends Activity {
                 MeasureStart = false;
             }
             if (LastEpoch != epoch){
-                String inputline = Long.toString(epoch-startTime)+","+Long.toString(epoch)+","+Float.toString(data)+"\n";
+                String inputline = Long.toString(epoch-startTime)+","+Long.toString(epoch)+","+String.format("%.3",data*0.0098066500286389)+"\n";
                 outputStream.write(inputline.getBytes());
                 outputStream.close();
                 Log.d("IN_Writing",filename+" "+ Float.toString(data));

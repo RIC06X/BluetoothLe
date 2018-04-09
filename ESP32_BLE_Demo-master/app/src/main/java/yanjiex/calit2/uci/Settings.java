@@ -111,58 +111,87 @@ public class Settings extends Activity {
         ThresholdNum4 = (EditText) findViewById(R.id.ThreshNumInput4);
         ThresholdNum5 = (EditText) findViewById(R.id.ThreshNumInput5);
 
-        SaveSetting = (Button) findViewById(R.id.SaveThreshold);
-        CalibrateStart = (Button) findViewById(R.id.CalibrateStart);
-        CalibrateEnd = (Button) findViewById(R.id.CalibrateEnd);
-        ReadThreshold = (Button) findViewById(R.id.ReadThreshold);
-
-
+        SaveSetting =       (Button) findViewById(R.id.SaveThreshold);
+        CalibrateStart =    (Button) findViewById(R.id.CalibrateStart);
+        CalibrateEnd =      (Button) findViewById(R.id.CalibrateEnd);
+        ReadThreshold =     (Button) findViewById(R.id.ReadThreshold);
 
         ReadThreshold.setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View v) {
-                                                 if(mBleWrapper.isConnected()){
-                                                     BluetoothGatt gatt = mBleWrapper.getGatt();
-                                                     oldValue1.setText(gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD1).getIntValue(FORMAT_UINT32,0));
-                                                     oldValue2.setText(gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD2).getIntValue(FORMAT_UINT32,0));
-                                                     oldValue3.setText(gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD3).getIntValue(FORMAT_UINT32,0));
-                                                     oldValue4.setText(gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD4).getIntValue(FORMAT_UINT32,0));
-                                                     oldValue5.setText(gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD5).getIntValue(FORMAT_UINT32,0));
-                                                 }
-                                             }
-                                         }
-        );
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            if (mBleWrapper!=null){
+                                BluetoothGatt gatt = mBleWrapper.getGatt();
+                                BluetoothGattService service = gatt.getService(Threashold_SERV);
+                                BluetoothGattCharacteristic c = service.getCharacteristic(THRESHOLD1);
+                                mBleWrapper.requestCharacteristicValue(c);
+                                Thread.sleep(200);
+                                c = service.getCharacteristic(THRESHOLD2);
+                                mBleWrapper.requestCharacteristicValue(c);
+                                Thread.sleep(200);
+                                c = service.getCharacteristic(THRESHOLD3);
+                                mBleWrapper.requestCharacteristicValue(c);
+                                Thread.sleep(200);
+                                c = service.getCharacteristic(THRESHOLD4);
+                                mBleWrapper.requestCharacteristicValue(c);
+                                Thread.sleep(200);
+                                c = service.getCharacteristic(THRESHOLD5);
+                                mBleWrapper.requestCharacteristicValue(c);
+                            }
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+                Toast.makeText(getApplicationContext(), "Please wait 2 second", Toast.LENGTH_LONG);
+            }
+        });
 
 
         //Save threshold values
         SaveSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String calibV = "0x40";     //??
-                byte[] eepromSetting = parseHexStringToBytes(calibV);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String calibV = "0x26";     //"&" correspond with the save function in the ESP32
+                        byte[] eepromSetting = parseHexStringToBytes(calibV);
+                        if (mBleWrapper.isConnected()) {
+                            BluetoothGatt gatt = mBleWrapper.getGatt();
+                            BluetoothGattCharacteristic threashold1 = gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD1);
+                            BluetoothGattCharacteristic threashold2 = gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD2);
+                            BluetoothGattCharacteristic threashold3 = gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD3);
+                            BluetoothGattCharacteristic threashold4 = gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD4);
+                            BluetoothGattCharacteristic threashold5 = gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD5);
+                            //write threshold values to device
+                            try{
+                                mBleWrapper.writeDataToCharacteristic(threashold1, ThresholdNum1.getText().toString().getBytes());
+                                Thread.sleep(200);
+                                mBleWrapper.writeDataToCharacteristic(threashold2, ThresholdNum2.getText().toString().getBytes());
+                                Thread.sleep(200);
+                                mBleWrapper.writeDataToCharacteristic(threashold3, ThresholdNum3.getText().toString().getBytes());
+                                Thread.sleep(200);
+                                mBleWrapper.writeDataToCharacteristic(threashold4, ThresholdNum4.getText().toString().getBytes());
+                                Thread.sleep(200);
+                                mBleWrapper.writeDataToCharacteristic(threashold5, ThresholdNum5.getText().toString().getBytes());
+                                Thread.sleep(200);
+                            }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
 
-                int newValue1 = Integer.parseInt(ThresholdNum1.getText().toString());
-                int newValue2 = Integer.parseInt(ThresholdNum2.getText().toString());
-                int newValue3 = Integer.parseInt(ThresholdNum3.getText().toString());
-                int newValue4 = Integer.parseInt(ThresholdNum4.getText().toString());
-                int newValue5 = Integer.parseInt(ThresholdNum5.getText().toString());
-                if (mBleWrapper.isConnected()) {
-                    BluetoothGatt gatt = mBleWrapper.getGatt();
-                    BluetoothGattCharacteristic threashold1 = gatt.getService(URO_SERV).getCharacteristic(THRESHOLD1);
-                    BluetoothGattCharacteristic threashold2 = gatt.getService(URO_SERV).getCharacteristic(THRESHOLD2);
-                    BluetoothGattCharacteristic threashold3 = gatt.getService(URO_SERV).getCharacteristic(THRESHOLD3);
-                    BluetoothGattCharacteristic threashold4 = gatt.getService(URO_SERV).getCharacteristic(THRESHOLD4);
-                    BluetoothGattCharacteristic threashold5 = gatt.getService(URO_SERV).getCharacteristic(THRESHOLD5);
-                    //write threshold values to device
-                    mBleWrapper.writeDataToCharacteristic(threashold1, ByteBuffer.allocate(4).putInt(newValue1).array());
-                    mBleWrapper.writeDataToCharacteristic(threashold2, ByteBuffer.allocate(4).putInt(newValue2).array());
-                    mBleWrapper.writeDataToCharacteristic(threashold3, ByteBuffer.allocate(4).putInt(newValue3).array());
-                    mBleWrapper.writeDataToCharacteristic(threashold4, ByteBuffer.allocate(4).putInt(newValue4).array());
-                    mBleWrapper.writeDataToCharacteristic(threashold5, ByteBuffer.allocate(4).putInt(newValue5).array());
-                    //write to EEPROM
-                    BluetoothGattCharacteristic saveToeeprom = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
-                    mBleWrapper.writeDataToCharacteristic(saveToeeprom, eepromSetting);
-                }
+                            //write to EEPROM
+                            BluetoothGattCharacteristic saveToeeprom = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
+                            mBleWrapper.writeDataToCharacteristic(saveToeeprom, eepromSetting);
+                        }
+                    }
+                }).start();
+                Toast.makeText(getApplicationContext(), "Please wait 2 second", Toast.LENGTH_LONG);
             }
         });
 
@@ -309,7 +338,32 @@ public class Settings extends Activity {
 
             @Override
             public void uiNewValueForCharacteristic(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, String strValue, int intValue, byte[] rawValue, String timestamp) {
-                Log.d("BLE WRAPPER", "got new Value");
+                Log.d("Setting: ", "IN SIDE THE SETTING");
+                if (ch.getUuid().equals(THRESHOLD1)){
+                    Log.d("Setting: ","The current UUID is: "+ch.getUuid().toString()+"The target uuid is: "+THRESHOLD1.toString());
+                    Log.d("Setting: ", "The raw data is :  "+ strValue);
+                    oldValue1.setText(strValue);
+                }
+                if (ch.getUuid().equals(THRESHOLD2)){
+                    Log.d("Setting: ","The current UUID is: "+ch.getUuid().toString()+"The target uuid is: "+THRESHOLD2.toString());
+                    Log.d("Setting: ", "The raw data is :  "+ strValue);
+                    oldValue2.setText(strValue);
+                }
+                if (ch.getUuid().equals(THRESHOLD3)){
+                    Log.d("Setting: ","The current UUID is: "+ch.getUuid().toString()+"The target uuid is: "+THRESHOLD3.toString());
+                    Log.d("Setting: ", "The raw data is :  "+ strValue);
+                    oldValue3.setText(strValue);
+                }
+                if (ch.getUuid().equals(THRESHOLD4)){
+                    Log.d("Setting: ","The current UUID is: "+ch.getUuid().toString()+"The target uuid is: "+THRESHOLD4.toString());
+                    Log.d("Setting: ", "The raw data is :  "+ strValue);
+                    oldValue4.setText(strValue);
+                }
+                if (ch.getUuid().equals(THRESHOLD5)){
+                    Log.d("Setting: ","The current UUID is: "+ch.getUuid().toString()+"The target uuid is: "+THRESHOLD5.toString());
+                    Log.d("Setting: ", "The raw data is :  "+ strValue);
+                    oldValue5.setText(strValue);
+                }
             }
 
             @Override
