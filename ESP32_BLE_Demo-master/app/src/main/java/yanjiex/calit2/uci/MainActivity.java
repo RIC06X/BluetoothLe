@@ -21,6 +21,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.robinhood.spark.SparkAdapter;
 import com.robinhood.spark.SparkView;
 
@@ -50,7 +62,7 @@ import java.util.UUID;
 import static android.content.ContentValues.TAG;
 import static java.util.UUID.fromString;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnChartValueSelectedListener {
     public static final String EXTRAS_DEVICE_NAME    = "BLE_DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "BLE_DEVICE_ADDRESS";
     public static final String EXTRAS_DEVICE_RSSI    = "BLE_DEVICE_RSSI";
@@ -70,7 +82,7 @@ public class MainActivity extends Activity {
     Button hundredCalibrateBtn;
     ToggleButton startWriteBtn;
 
-    private sensorUpdateAdpter sparkAdapter;
+//    private sensorUpdateAdpter sparkAdapter;
     private TextView scrubInfoTextView;
 
     final UUID URO_SERV     =   fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
@@ -86,20 +98,129 @@ public class MainActivity extends Activity {
     File file;
     File tempfile;
 
+    LineChart mChart;
+    private LineDataSet createSet() {
 
+        LineDataSet set = new LineDataSet(null, "Dynamic Data");
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set.setColor(ColorTemplate.getHoloBlue());
+        set.setCircleColor(Color.WHITE);
+        set.setLineWidth(4f);
+        set.setCircleRadius(6f);
+        set.setFillAlpha(65);
+        set.setFillColor(ColorTemplate.getHoloBlue());
+        set.setHighLightColor(Color.rgb(244, 117, 117));
+        set.setValueTextColor(Color.WHITE);
+        set.setValueTextSize(15f);
+        set.setDrawValues(false);
+        return set;
+    }
+    private void CreateChart () {
+        mChart = (LineChart) findViewById(R.id.chart1);
+        mChart.setOnChartValueSelectedListener(this);
+
+        // enable description text
+        mChart.getDescription().setEnabled(true);
+
+        // enable touch gestures
+        mChart.setTouchEnabled(true);
+
+        // enable scaling and dragging
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(true);
+        mChart.setDrawGridBackground(true);
+
+        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+        mv.setChartView(mChart); // For bounds control
+        mChart.setMarker(mv); // Set the marker to the chart
+
+        // if disabled, scaling can be done on x- and y-axis separately
+        mChart.setPinchZoom(true);
+
+        // set an alternative background color
+        mChart.setBackgroundColor(Color.LTGRAY);
+
+        LineData data = new LineData();
+        data.setValueTextColor(Color.WHITE);
+
+        // add empty data
+        mChart.setData(data);
+
+        // get the legend (only possible after setting data)
+        Legend l = mChart.getLegend();
+
+        // modify the legend ...
+        l.setForm(Legend.LegendForm.LINE);
+        //l.setTypeface(mTfLight);
+        l.setTextColor(Color.WHITE);
+
+        XAxis xl = mChart.getXAxis();
+        //xl.setTypeface(mTfLight);
+        xl.setTextColor(Color.WHITE);
+        xl.setDrawGridLines(false);
+        xl.setAvoidFirstLastClipping(true);
+        xl.setEnabled(true);
+
+
+        LimitLine ll1 = new LimitLine(1000f, "Upper Limit");
+        ll1.setLineWidth(4f);
+        ll1.enableDashedLine(10f, 10f, 0f);
+        ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+        ll1.setTextSize(10f);
+
+        YAxis leftAxis = mChart.getAxisLeft();
+        //leftAxis.setTypeface(mTfLight);
+        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setAxisMaximum(1200f);
+        leftAxis.addLimitLine(ll1);
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setDrawGridLines(true);
+
+
+
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setEnabled(false);
+    }
+    private void addEntry(float number ) {
+
+        LineData data = mChart.getData();
+
+        if (data != null) {
+
+            ILineDataSet set = data.getDataSetByIndex(0);
+            // set.addEntry(...); // can be called as well
+
+            if (set == null) {
+                set = createSet();
+                data.addDataSet(set);
+            }
+
+            data.addEntry(new Entry(set.getEntryCount(), (float) number), 0);
+            data.notifyDataChanged();
+
+            // let the chart know it's data has changed
+            mChart.notifyDataSetChanged();
+            // limit the number of visible entries
+            mChart.setVisibleXRangeMaximum(30);
+            // move to the latest entry
+            mChart.moveViewToX(data.getEntryCount());
+            // this automatically refreshes the chart (calls invalidate())
+        }
+    }
+    private Thread thread;
     public void getViews(){
         mDeviceAddressView = (TextView) findViewById(R.id.Device_Rssi);
         mDeviceStatus = (TextView) findViewById(R.id.Device_Info);
         tareBtn = (Button) findViewById(R.id.Main_tare);
         //not useful
-        zeroCalibrateBtn = (Button) findViewById(R.id.Main_SetZero);
-        hundredCalibrateBtn = (Button) findViewById(R.id.Main_SetHund);
+//        zeroCalibrateBtn = (Button) findViewById(R.id.Main_SetZero);
+//        hundredCalibrateBtn = (Button) findViewById(R.id.Main_SetHund);
         //not useful
 
         startWriteBtn = (ToggleButton) findViewById(R.id.writeFile);
 
         scrubInfoTextView = (TextView) findViewById(R.id.info_textview);
-        sparkView = (SparkView) findViewById(R.id.sparkview);
+        //sparkView = (SparkView) findViewById(R.id.sparkview);
 
         tareBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -171,32 +292,33 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        zeroCalibrateBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                String calibV = "0x24";
-                byte[] callibrateData = parseHexStringToBytes(calibV);
-                if (mBleWrapper.isConnected()){
-                    BluetoothGatt gatt = mBleWrapper.getGatt();
-                    BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
-                    mBleWrapper.writeDataToCharacteristic(c, callibrateData);
-                }
-            }
-        });
-
-        hundredCalibrateBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                String calibV = "0x23";
-                byte[] callibrateData = parseHexStringToBytes(calibV);
-                if (mBleWrapper.isConnected()){
-                    BluetoothGatt gatt = mBleWrapper.getGatt();
-                    BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
-                    mBleWrapper.writeDataToCharacteristic(c, callibrateData);
-                }
-            }
-        });
+//        zeroCalibrateBtn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+//                String calibV = "0x24";
+//                byte[] callibrateData = parseHexStringToBytes(calibV);
+//                if (mBleWrapper.isConnected()){
+//                    BluetoothGatt gatt = mBleWrapper.getGatt();
+//                    BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
+//                    mBleWrapper.writeDataToCharacteristic(c, callibrateData);
+//                }
+//            }
+//        });
+//
+//        hundredCalibrateBtn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+//                String calibV = "0x23";
+//                byte[] callibrateData = parseHexStringToBytes(calibV);
+//                if (mBleWrapper.isConnected()){
+//                    BluetoothGatt gatt = mBleWrapper.getGatt();
+//                    BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
+//                    mBleWrapper.writeDataToCharacteristic(c, callibrateData);
+//                }
+//            }
+//        });
     }
+
     //Create menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -261,10 +383,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         getViews();
-        //Set the graphing adpater
-        sparkAdapter = new sensorUpdateAdpter();
-        sparkView.setAdapter(sparkAdapter);
-        setScrubHandler(sparkView);
+        CreateChart();
 
     }
 
@@ -296,7 +415,7 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mDeviceStatus.setText("connected\n");
+                        mDeviceStatus.setText("Device connected");
                         mDeviceAddressView.setText(mDeviceName);
                         Log.d("Device Connected","YES");
                     }
@@ -307,7 +426,7 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mDeviceStatus.setText("Disconnected\n");
+                        mDeviceStatus.setText("Disconnected");
                         Log.d("Device Disconnected","YES");
                     }
                 });
@@ -408,6 +527,7 @@ public class MainActivity extends Activity {
                     Log.d("MainActicity: ", rawValue.toString()+"  data");
                     mFloatValue= resolveByteFloat(rawValue);
                     Log.d(LOGTAG, "uiCharacteristicsDetails: " + mFloatValue);
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -417,7 +537,10 @@ public class MainActivity extends Activity {
                                 mDeviceAddressView.setText(String.format("%.2f", mFloatValue) + " g     " +
                                         String.format("%.2f", mFloatValue * 0.0098066500286389) + " Newton");
                             //sparkAdapter.sensorUpdate(mFloatValue);
-                            sparkAdapter.updateInfo(mFloatValue);
+                            //sparkAdapter.updateInfo(mFloatValue);
+
+
+                            addEntry(mFloatValue);
                             if (mFloatValue > 1000) {
                                 setScreencolor(Color.parseColor("#b61827"));
                             } else if (mFloatValue > 800 && mFloatValue <= 1000) {
@@ -431,11 +554,11 @@ public class MainActivity extends Activity {
                             }
                         }
                     });
-
                     if (isWriting){
                         writeTofile("tempData.txt", mFloatValue);
                         Log.d("WRITE__FILE", "IS WRITING");
                     }
+
                 }
             }
 
@@ -473,7 +596,6 @@ public class MainActivity extends Activity {
         if(mBleWrapper.initialize() == false) {
             finish();
         }
-        //mDeviceStatus.setText("Disconnected");
         mBleWrapper.connect(mDeviceAddress);
     }
 
@@ -489,7 +611,9 @@ public class MainActivity extends Activity {
                 MeasureStart = false;
             }
             if (LastEpoch != epoch){
-                String inputline = Long.toString(epoch-startTime)+","+Long.toString(epoch)+","+String.format("%.3",data*0.0098066500286389)+"\n";
+                double temp = data * 0.0098066500286389;
+                String tempString = String.format("%.2f",temp);
+                String inputline = Long.toString(epoch-startTime)+","+Long.toString(epoch)+","+tempString+"\n";
                 outputStream.write(inputline.getBytes());
                 outputStream.close();
                 Log.d("IN_Writing",filename+" "+ Float.toString(data));
@@ -538,10 +662,6 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
         Log.d("On Pause","YES");
-//        if (mBleWrapper.isConnected()){
-//            mBleWrapper.diconnect();
-//            mBleWrapper.close();
-//        }
     };
 //---------------------------------the code below is the graph view adpter---------------------------
 
@@ -549,61 +669,16 @@ public class MainActivity extends Activity {
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(color);
     }
-    private void setScrubHandler(SparkView sparkView) {
 
-        sparkView.setScrubListener(new SparkView.OnScrubListener() {
-            @Override
-            public void onScrubbed(Object value) {
-                if (value == null) {
-                    scrubInfoTextView.setText("Tap and hold to see the value ");
-                } else {
-                    scrubInfoTextView.setText(getString(R.string.scrub_format, value));
-                }
-            }
-        });
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        Log.i("Entry selected", e.toString());
+    }
+
+    @Override
+    public void onNothingSelected() {
+
     }
 
 
-    public static class sensorUpdateAdpter extends SparkAdapter{
-        private float[] yData;
-
-        public sensorUpdateAdpter() {
-            yData = new float[50];
-            notifyDataSetChanged();
-        }
-
-        public void updateInfo(float number) {
-            int count = yData.length;
-            for (int i = 0; i < count-1; i++) {
-                yData[i] = yData[i + 1];
-            }
-            yData[count -1] = number;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public boolean hasBaseLine() {
-            return true;
-        }
-
-        @Override
-        public float getBaseLine() {
-            return 0;
-        }
-
-        @Override
-        public int getCount() {
-            return yData.length;
-        }
-
-        @Override
-        public Object getItem(int index) {
-            return yData[index];
-        }
-
-        @Override
-        public float getY(int index) {
-            return yData[index];
-        }
-    }
 }

@@ -36,14 +36,17 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         >
-
-        <com.robinhood.spark.SparkView
-            android:id="@+id/sparkview"
-            android:layout_width="500dp"
-            android:layout_height="500dp"
-            app:spark_animateChanges="true"
-            app:spark_lineColor="@color/colorAccent"
-            app:spark_scrubEnabled="true" />
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart1"
+            android:layout_width="650dp"
+            android:layout_height="650dp" />
+        <!--<com.robinhood.spark.SparkView-->
+            <!--android:id="@+id/sparkview"-->
+            <!--android:layout_width="500dp"-->
+            <!--android:layout_height="500dp"-->
+            <!--app:spark_animateChanges="true"-->
+            <!--app:spark_lineColor="@color/colorAccent"-->
+            <!--app:spark_scrubEnabled="true" />-->
         <TextView
             android:id="@+id/info_textview"
             android:layout_width="wrap_content"
@@ -52,7 +55,7 @@
             android:gravity="center"
             android:textAppearance="?android:textAppearanceLarge"
             android:layout_gravity="center"
-            android:text="Tap and hold to see the value " />
+            android:text="Tap the point to see the value " />
     </LinearLayout>
 
 
@@ -75,20 +78,20 @@
             android:layout_gravity="center"
             android:textOff="Write to File"
             android:textOn="Save file" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Set 0g"
-            android:id = "@+id/Main_SetZero"
-            android:layout_gravity="center"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Set 100g"
-            android:id = "@+id/Main_SetHund"
-            android:layout_gravity="center"
-            />
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Set 0g"-->
+            <!--android:id = "@+id/Main_SetZero"-->
+            <!--android:layout_gravity="center"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Set 100g"-->
+            <!--android:id = "@+id/Main_SetHund"-->
+            <!--android:layout_gravity="center"-->
+            <!--/>-->
     </LinearLayout>
 </LinearLayout>
 </ScrollView>

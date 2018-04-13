@@ -339,7 +339,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To calibrate, please remove everything that attached to the scale and then press CalibrateStart"
+            android:text="To calibrate, please remove anything that attached to the scale and then press CalibrateStart"
             android:id="@+id/CalibrateGuide"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
 
