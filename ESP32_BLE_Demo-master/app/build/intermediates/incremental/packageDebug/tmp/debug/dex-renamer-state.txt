@@ -1,4 +1,7 @@
-#Tue Apr 10 16:10:14 PDT 2018
-base.0=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dexMerger/debug/0
+#Tue Apr 24 17:00:07 PDT 2018
+base.0=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dexMerger/debug/12
+path.1=classes.dex
+renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
+base.1=/Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/build/intermediates/transforms/dexMerger/debug/13

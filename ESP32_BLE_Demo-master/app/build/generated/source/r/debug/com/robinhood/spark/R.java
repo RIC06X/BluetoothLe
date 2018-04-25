@@ -33,10 +33,10 @@ public final class R {
         public static final int spark_scrub_line_width = 0x7f060050;
     }
     public static final class id {
-        public static final int down = 0x7f080048;
-        public static final int none = 0x7f08006b;
-        public static final int towardZero = 0x7f0800c7;
-        public static final int up = 0x7f0800c9;
+        public static final int down = 0x7f08004a;
+        public static final int none = 0x7f08006d;
+        public static final int towardZero = 0x7f0800c9;
+        public static final int up = 0x7f0800cb;
     }
     public static final class style {
         public static final int spark_SparkView = 0x7f0e0140;

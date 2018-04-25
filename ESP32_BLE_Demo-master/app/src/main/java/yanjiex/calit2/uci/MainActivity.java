@@ -82,6 +82,12 @@ public class MainActivity extends Activity implements OnChartValueSelectedListen
     Button hundredCalibrateBtn;
     ToggleButton startWriteBtn;
 
+    public static int Threshold1 = 1000;
+    public static int Threshold2 = 800;
+    public static int Threshold3 = 600;
+    public static int Threshold4 = 400;
+    public static int Threshold5 = 200;
+
 //    private sensorUpdateAdpter sparkAdapter;
     private TextView scrubInfoTextView;
 
@@ -162,7 +168,7 @@ public class MainActivity extends Activity implements OnChartValueSelectedListen
         xl.setEnabled(true);
 
 
-        LimitLine ll1 = new LimitLine(1000f, "Upper Limit");
+        LimitLine ll1 = new LimitLine(Threshold1, "Upper Limit");
         ll1.setLineWidth(4f);
         ll1.enableDashedLine(10f, 10f, 0f);
         ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
@@ -400,6 +406,7 @@ public class MainActivity extends Activity implements OnChartValueSelectedListen
         }
     }
     float mFloatValue;   //TODO VERY IMPORTANT DATA INPUT!!
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -539,15 +546,14 @@ public class MainActivity extends Activity implements OnChartValueSelectedListen
                             //sparkAdapter.sensorUpdate(mFloatValue);
                             //sparkAdapter.updateInfo(mFloatValue);
 
-
                             addEntry(mFloatValue);
-                            if (mFloatValue > 1000) {
+                            if (mFloatValue > Threshold1) {
                                 setScreencolor(Color.parseColor("#b61827"));
-                            } else if (mFloatValue > 800 && mFloatValue <= 1000) {
+                            } else if (mFloatValue > Threshold2 && mFloatValue <= Threshold1) {
                                 setScreencolor(Color.parseColor("#ef5350"));
-                            } else if (mFloatValue > 500 && mFloatValue <= 800) {
+                            } else if (mFloatValue > Threshold3 && mFloatValue <= Threshold2) {
                                 setScreencolor(Color.parseColor("#ffca28"));
-                            } else if (mFloatValue < 500 && mFloatValue >= 3) {
+                            } else if (mFloatValue < Threshold3 && mFloatValue >= 3) {
                                 setScreencolor(Color.parseColor("#aed581"));
                             } else if (mFloatValue < 3 && mFloatValue >= 0) {
                                 setScreencolor(Color.parseColor("#ffffff"));

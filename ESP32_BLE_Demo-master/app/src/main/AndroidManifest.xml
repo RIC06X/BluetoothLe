@@ -23,7 +23,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="BluetoothLE_Test"
+        android:label="Urology"
         android:logo="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
         <activity android:name="yanjiex.calit2.uci.MainActivity">

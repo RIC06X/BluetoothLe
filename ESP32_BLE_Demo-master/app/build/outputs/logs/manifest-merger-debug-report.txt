@@ -4,12 +4,12 @@ ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/sr
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-58:12
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-58:12
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-58:12
-MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/daf0b557b15b2a037fa7e9e7a9c78c41/AndroidManifest.xml:17:1-27:12
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/69d9fec017e5311846f945ed88aa1e22/AndroidManifest.xml:2:1-9:12
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/7a48b65db240eac5029740087f51a700/AndroidManifest.xml:2:1-9:12
-MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/b84d19010a3928c757c8e6ab59ef2726/AndroidManifest.xml:17:1-24:12
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/41030b3ef24da374e370e5315860ed75/AndroidManifest.xml:2:1-11:12
-MERGED from [com.robinhood.spark:spark:1.2.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/spark-1.2.0.aar/1f64b43987d19bc715bdc8f1ba40f31d/AndroidManifest.xml:2:1-10:12
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/a92fa9b20b6de3a959db9b460fc52b47/AndroidManifest.xml:17:1-27:12
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/79f41eb9e52115df8b29e3832261fba7/AndroidManifest.xml:2:1-9:12
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/01184aaf3482f53fffd5f303fd336c1e/AndroidManifest.xml:2:1-9:12
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/2e6b258a32056504a4ca801336c5c75d/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/0eb053dc6f66064eef9aa235c6cf77a3/AndroidManifest.xml:2:1-11:12
+MERGED from [com.robinhood.spark:spark:1.2.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/spark-1.2.0.aar/6d0ffbad2c35b8abe2c71b44b6059c80/AndroidManifest.xml:2:1-10:12
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-58:12
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-58:12
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:2:1-58:12
@@ -31,22 +31,22 @@ uses-sdk
 ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
-MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/daf0b557b15b2a037fa7e9e7a9c78c41/AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/daf0b557b15b2a037fa7e9e7a9c78c41/AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/69d9fec017e5311846f945ed88aa1e22/AndroidManifest.xml:5:5-44
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/69d9fec017e5311846f945ed88aa1e22/AndroidManifest.xml:5:5-44
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/7a48b65db240eac5029740087f51a700/AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/7a48b65db240eac5029740087f51a700/AndroidManifest.xml:5:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/b84d19010a3928c757c8e6ab59ef2726/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/b84d19010a3928c757c8e6ab59ef2726/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/41030b3ef24da374e370e5315860ed75/AndroidManifest.xml:5:5-7:41
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/41030b3ef24da374e370e5315860ed75/AndroidManifest.xml:5:5-7:41
-MERGED from [com.robinhood.spark:spark:1.2.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/spark-1.2.0.aar/1f64b43987d19bc715bdc8f1ba40f31d/AndroidManifest.xml:6:5-8:41
-MERGED from [com.robinhood.spark:spark:1.2.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/spark-1.2.0.aar/1f64b43987d19bc715bdc8f1ba40f31d/AndroidManifest.xml:6:5-8:41
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/a92fa9b20b6de3a959db9b460fc52b47/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/a92fa9b20b6de3a959db9b460fc52b47/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/79f41eb9e52115df8b29e3832261fba7/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/79f41eb9e52115df8b29e3832261fba7/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/01184aaf3482f53fffd5f303fd336c1e/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/01184aaf3482f53fffd5f303fd336c1e/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/2e6b258a32056504a4ca801336c5c75d/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/2e6b258a32056504a4ca801336c5c75d/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/0eb053dc6f66064eef9aa235c6cf77a3/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/0eb053dc6f66064eef9aa235c6cf77a3/AndroidManifest.xml:5:5-7:41
+MERGED from [com.robinhood.spark:spark:1.2.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/spark-1.2.0.aar/6d0ffbad2c35b8abe2c71b44b6059c80/AndroidManifest.xml:6:5-8:41
+MERGED from [com.robinhood.spark:spark:1.2.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/spark-1.2.0.aar/6d0ffbad2c35b8abe2c71b44b6059c80/AndroidManifest.xml:6:5-8:41
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
 INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:7:5-9:41
 	tools:overrideLibrary
-		ADDED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/daf0b557b15b2a037fa7e9e7a9c78c41/AndroidManifest.xml:23:9-75
+		ADDED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/a92fa9b20b6de3a959db9b460fc52b47/AndroidManifest.xml:23:9-75
 	android:targetSdkVersion
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:9:9-38
 		INJECTED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml
@@ -83,18 +83,18 @@ ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/sr
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:20:22-77
 application
 ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:23:5-56:19
-MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/daf0b557b15b2a037fa7e9e7a9c78c41/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/daf0b557b15b2a037fa7e9e7a9c78c41/AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/69d9fec017e5311846f945ed88aa1e22/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/69d9fec017e5311846f945ed88aa1e22/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/7a48b65db240eac5029740087f51a700/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/7a48b65db240eac5029740087f51a700/AndroidManifest.xml:7:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/b84d19010a3928c757c8e6ab59ef2726/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/b84d19010a3928c757c8e6ab59ef2726/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/41030b3ef24da374e370e5315860ed75/AndroidManifest.xml:9:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/41030b3ef24da374e370e5315860ed75/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/a92fa9b20b6de3a959db9b460fc52b47/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.4.0.aar/a92fa9b20b6de3a959db9b460fc52b47/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/79f41eb9e52115df8b29e3832261fba7/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-23.4.0.aar/79f41eb9e52115df8b29e3832261fba7/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/01184aaf3482f53fffd5f303fd336c1e/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-vector-drawable:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-23.4.0.aar/01184aaf3482f53fffd5f303fd336c1e/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/2e6b258a32056504a4ca801336c5c75d/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.4.0] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/support-v4-23.4.0.aar/2e6b258a32056504a4ca801336c5c75d/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/0eb053dc6f66064eef9aa235c6cf77a3/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/yanjie/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.0.2.aar/0eb053dc6f66064eef9aa235c6cf77a3/AndroidManifest.xml:9:5-20
 	android:label
-		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:26:9-41
+		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:26:9-32
 	android:icon
 		ADDED from /Users/yanjie/Desktop/CALIT2/BluetoothLe/ESP32_BLE_Demo-master/app/src/main/AndroidManifest.xml:25:9-43
 	android:allowBackup

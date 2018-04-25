@@ -405,6 +405,11 @@ public class Settings extends Activity {
         getView();
     }
 
+    void ChangeMainColor(){
+        MainActivity.Threshold1= Integer.getInteger(oldValue5.getText().toString());
+        MainActivity.Threshold2= Integer.getInteger(oldValue4.getText().toString());
+        MainActivity.Threshold3= Integer.getInteger(oldValue3.getText().toString());
+    }
     @Override
     protected void onStop() {
         super.onStop();

@@ -9,26 +9,51 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <TextView
-        android:layout_gravity="center"
-        android:id="@+id/Device_Info"
-        android:text="Disconnected"
-        android:textSize="30dp"
-        android:textAlignment="center"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-    />
+        android:layout_height="80dp"
+        >
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/Device_Info"
+            android:text="Disconnected"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            />
 
-    <TextView
-        android:layout_gravity="center"
-        android:id="@+id/Device_Rssi"
-        android:text="Please connect to a device"
-        android:textSize="30dp"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        <TextView
+            android:id="@+id/Device_Rssi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:text="Please connect to a device"
+            android:textAlignment="center"
+            android:textSize="30dp" />
 
+        <ImageView
+            android:id="@+id/battery_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="11dp"
+            android:src="@drawable/full" />
+
+        <TextView
+            android:id="@+id/battery_percnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/battery_icon"
+            android:text="100%"
+            android:textSize="30dp" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
