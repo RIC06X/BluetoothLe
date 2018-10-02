@@ -6,10 +6,8 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresPermission;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,16 +21,13 @@ import org.bluetooth.bledemo.BleWrapper;
 import org.bluetooth.bledemo.BleWrapperUiCallbacks;
 import org.bluetooth.bledemo.R;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import static android.bluetooth.BluetoothGattCharacteristic.FORMAT_UINT32;
 import static java.util.UUID.fromString;
 import static yanjiex.calit2.uci.MainActivity.EXTRAS_DEVICE_ADDRESS;
 import static yanjiex.calit2.uci.MainActivity.EXTRAS_DEVICE_NAME;
-import static yanjiex.calit2.uci.MainActivity.EXTRAS_DEVICE_RSSI;
 
 /**
  * Created by yanjie on 2/13/18.
@@ -41,31 +36,17 @@ import static yanjiex.calit2.uci.MainActivity.EXTRAS_DEVICE_RSSI;
 public class Settings extends Activity {
     private String mDeviceName;
     private String mDeviceAddress;
-    private String mDeviceRSSI;
     private BleWrapper mBleWrapper;
     final UUID URO_SERV = fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
     final UUID TARE_CH  = fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
 
     final UUID Threashold_SERV = fromString("f3a7e7e3-2f1c-41d0-91f0-01a4c0a5c4a8");
-    final UUID THRESHOLD1 = fromString("b97f5987-dbe5-4bae-af26-ff34cbc32f07");
-    final UUID THRESHOLD2 = fromString("c19c5488-bd8e-428e-a665-6f6a5d36f1d7");
-    final UUID THRESHOLD3 = fromString("ef85fb2f-6256-4ba7-b7be-3af8fdbecab1");
-    final UUID THRESHOLD4 = fromString("a732fcf0-2060-4026-9cac-775d0aade77b");
-    final UUID THRESHOLD5 = fromString("e9cd9578-485e-41b9-b439-7bef16382342");
-
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_threshold);
-        final Intent intent = getIntent();
-        if (intent!=null){
-            mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
-            mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
-
-        }
-        this.getActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+    public static final UUID THRESHOLD1 = fromString("b97f5987-dbe5-4bae-af26-ff34cbc32f07");
+    public static final UUID THRESHOLD2 = fromString("c19c5488-bd8e-428e-a665-6f6a5d36f1d7");
+    public static final UUID THRESHOLD3 = fromString("ef85fb2f-6256-4ba7-b7be-3af8fdbecab1");
+    public static final UUID THRESHOLD4 = fromString("a732fcf0-2060-4026-9cac-775d0aade77b");
+    public static final UUID THRESHOLD5 = fromString("e9cd9578-485e-41b9-b439-7bef16382342");
+    boolean isSet = false;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -77,9 +58,30 @@ public class Settings extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        final Intent intent = getIntent();
+        if (intent!=null){
+            mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
+            mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+        }
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
+        GetCurrentThreshold();
+    }
+
     TextView oldValue1, oldValue2, oldValue3, oldValue4, oldValue5;
     EditText ThresholdNum1,ThresholdNum2,ThresholdNum3,ThresholdNum4,ThresholdNum5;
     Button SaveSetting,ReadThreshold, CalibrateStart, CalibrateEnd;
+
+    @Override
+    public void onBackPressed() {
+        mBleWrapper.diconnect();
+        mBleWrapper.close();
+        super.onBackPressed();
+
+    }
 
     //used for processing sending strings
     public byte[] parseHexStringToBytes(final String hex) {
@@ -98,56 +100,29 @@ public class Settings extends Activity {
 
     public void getView() {
         //Old threshold value
-        oldValue1 = (TextView) findViewById(R.id.oldValueText1);
-        oldValue2 = (TextView) findViewById(R.id.oldValueText2);
-        oldValue3 = (TextView) findViewById(R.id.oldValueText3);
-        oldValue4 = (TextView) findViewById(R.id.oldValueText4);
-        oldValue5 = (TextView) findViewById(R.id.oldValueText5);
+        oldValue1 = findViewById(R.id.oldValueText1);
+        oldValue2 = findViewById(R.id.oldValueText2);
+        oldValue3 = findViewById(R.id.oldValueText3);
+        oldValue4 = findViewById(R.id.oldValueText4);
+        oldValue5 = findViewById(R.id.oldValueText5);
 
         //New Value
-        ThresholdNum1 = (EditText) findViewById(R.id.ThreshNumInput1);
-        ThresholdNum2 = (EditText) findViewById(R.id.ThreshNumInput2);
-        ThresholdNum3 = (EditText) findViewById(R.id.ThreshNumInput3);
-        ThresholdNum4 = (EditText) findViewById(R.id.ThreshNumInput4);
-        ThresholdNum5 = (EditText) findViewById(R.id.ThreshNumInput5);
+        ThresholdNum1 = findViewById(R.id.ThreshNumInput1);
+        ThresholdNum2 = findViewById(R.id.ThreshNumInput2);
+        ThresholdNum3 = findViewById(R.id.ThreshNumInput3);
+        ThresholdNum4 = findViewById(R.id.ThreshNumInput4);
+        ThresholdNum5 = findViewById(R.id.ThreshNumInput5);
 
-        SaveSetting =       (Button) findViewById(R.id.SaveThreshold);
-        CalibrateStart =    (Button) findViewById(R.id.CalibrateStart);
-        CalibrateEnd =      (Button) findViewById(R.id.CalibrateEnd);
-        ReadThreshold =     (Button) findViewById(R.id.ReadThreshold);
+        SaveSetting = findViewById(R.id.SaveThreshold);
+        CalibrateStart = findViewById(R.id.CalibrateStart);
+        CalibrateEnd = findViewById(R.id.CalibrateEnd);
+        ReadThreshold = findViewById(R.id.ReadThreshold);
 
         ReadThreshold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            if (mBleWrapper!=null){
-                                BluetoothGatt gatt = mBleWrapper.getGatt();
-                                BluetoothGattService service = gatt.getService(Threashold_SERV);
-                                BluetoothGattCharacteristic c = service.getCharacteristic(THRESHOLD1);
-                                mBleWrapper.requestCharacteristicValue(c);
-                                Thread.sleep(200);
-                                c = service.getCharacteristic(THRESHOLD2);
-                                mBleWrapper.requestCharacteristicValue(c);
-                                Thread.sleep(200);
-                                c = service.getCharacteristic(THRESHOLD3);
-                                mBleWrapper.requestCharacteristicValue(c);
-                                Thread.sleep(200);
-                                c = service.getCharacteristic(THRESHOLD4);
-                                mBleWrapper.requestCharacteristicValue(c);
-                                Thread.sleep(200);
-                                c = service.getCharacteristic(THRESHOLD5);
-                                mBleWrapper.requestCharacteristicValue(c);
-                            }
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-                Toast.makeText(getApplicationContext(), "Please wait 2 second", Toast.LENGTH_LONG);
+                GetCurrentThreshold();
+                Toast.makeText(getApplicationContext(), "Read threshold command sent", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -169,17 +144,32 @@ public class Settings extends Activity {
                             BluetoothGattCharacteristic threashold4 = gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD4);
                             BluetoothGattCharacteristic threashold5 = gatt.getService(Threashold_SERV).getCharacteristic(THRESHOLD5);
                             //write threshold values to device
+
                             try{
+                                MainActivity.Threshold1 = Float.parseFloat(ThresholdNum1.getText().toString());
+                                MainActivity.Threshold2 = Float.parseFloat(ThresholdNum2.getText().toString());
+                                MainActivity.Threshold3 = Float.parseFloat(ThresholdNum3.getText().toString());
+                                MainActivity.Threshold4 = Float.parseFloat(ThresholdNum4.getText().toString());
+                                MainActivity.Threshold5 = Float.parseFloat(ThresholdNum5.getText().toString());
+                                Float.toString(MainActivity.Threshold1);
+
                                 mBleWrapper.writeDataToCharacteristic(threashold1, ThresholdNum1.getText().toString().getBytes());
-                                Thread.sleep(200);
+                                Thread.sleep(230);
                                 mBleWrapper.writeDataToCharacteristic(threashold2, ThresholdNum2.getText().toString().getBytes());
-                                Thread.sleep(200);
+                                Thread.sleep(230);
                                 mBleWrapper.writeDataToCharacteristic(threashold3, ThresholdNum3.getText().toString().getBytes());
-                                Thread.sleep(200);
+                                Thread.sleep(230);
                                 mBleWrapper.writeDataToCharacteristic(threashold4, ThresholdNum4.getText().toString().getBytes());
-                                Thread.sleep(200);
+                                Thread.sleep(230);
                                 mBleWrapper.writeDataToCharacteristic(threashold5, ThresholdNum5.getText().toString().getBytes());
-                                Thread.sleep(200);
+                                Thread.sleep(230);
+//
+//                                MainActivity.Threshold1 = Integer.parseInt(ThresholdNum1.getText().toString());
+//                                MainActivity.Threshold2 = Integer.parseInt(ThresholdNum2.getText().toString());
+//                                MainActivity.Threshold3 = Integer.parseInt(ThresholdNum3.getText().toString());
+//                                MainActivity.Threshold4 = Integer.parseInt(ThresholdNum4.getText().toString());
+//                                MainActivity.Threshold5 = Integer.parseInt(ThresholdNum5.getText().toString());
+                                MainActivity.shouldChangeChart = true;
                             }
                             catch (Exception e){
                                 e.printStackTrace();
@@ -191,9 +181,10 @@ public class Settings extends Activity {
                         }
                     }
                 }).start();
-                Toast.makeText(getApplicationContext(), "Please wait 2 second", Toast.LENGTH_LONG);
+                Toast.makeText(getApplicationContext(), "Save threshold command sent, Please wait 3 second", Toast.LENGTH_LONG).show();
             }
         });
+
 
         CalibrateStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,6 +195,7 @@ public class Settings extends Activity {
                     BluetoothGatt gatt = mBleWrapper.getGatt();
                     BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
                     mBleWrapper.writeDataToCharacteristic(c, callibrateData);
+                    isSet = true;
                 }
             }
         });
@@ -214,17 +206,54 @@ public class Settings extends Activity {
                 String calibV = "0x23";
                 byte[] callibrateData = parseHexStringToBytes(calibV);
                 if (mBleWrapper.isConnected()) {
-                    BluetoothGatt gatt = mBleWrapper.getGatt();
-                    BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
-                    mBleWrapper.writeDataToCharacteristic(c, callibrateData);
+                    if (isSet) {
+                        BluetoothGatt gatt = mBleWrapper.getGatt();
+                        BluetoothGattCharacteristic c = gatt.getService(URO_SERV).getCharacteristic(TARE_CH);
+                        mBleWrapper.writeDataToCharacteristic(c, callibrateData);
+                        isSet = false;
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Please press the Calibrate Start button first.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
     }
+
+    public void GetCurrentThreshold() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (mBleWrapper != null) {
+                        BluetoothGatt gatt = mBleWrapper.getGatt();
+                        BluetoothGattService service = gatt.getService(Threashold_SERV);
+                        BluetoothGattCharacteristic c = service.getCharacteristic(THRESHOLD1);
+                        mBleWrapper.requestCharacteristicValue(c);
+                        Thread.sleep(230);
+                        c = service.getCharacteristic(THRESHOLD2);
+                        mBleWrapper.requestCharacteristicValue(c);
+                        Thread.sleep(230);
+                        c = service.getCharacteristic(THRESHOLD3);
+                        mBleWrapper.requestCharacteristicValue(c);
+                        Thread.sleep(230);
+                        c = service.getCharacteristic(THRESHOLD4);
+                        mBleWrapper.requestCharacteristicValue(c);
+                        Thread.sleep(230);
+                        c = service.getCharacteristic(THRESHOLD5);
+                        mBleWrapper.requestCharacteristicValue(c);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        Toast.makeText(getApplicationContext(), "Please wait 2 second", Toast.LENGTH_LONG).show();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
-    };
+    }
 
     @Override
     protected void onResume() {
@@ -378,7 +407,7 @@ public class Settings extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(), "Writing to " + description + " was finished successfully!", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Writing to " + description + " was finished successfully!", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -405,11 +434,6 @@ public class Settings extends Activity {
         getView();
     }
 
-    void ChangeMainColor(){
-        MainActivity.Threshold1= Integer.getInteger(oldValue5.getText().toString());
-        MainActivity.Threshold2= Integer.getInteger(oldValue4.getText().toString());
-        MainActivity.Threshold3= Integer.getInteger(oldValue3.getText().toString());
-    }
     @Override
     protected void onStop() {
         super.onStop();

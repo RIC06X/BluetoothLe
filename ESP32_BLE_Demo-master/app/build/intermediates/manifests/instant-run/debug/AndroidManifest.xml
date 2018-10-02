@@ -6,25 +6,24 @@
 
     <uses-sdk
         android:minSdkVersion="21"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:debuggable="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="Urology"
-        android:logo="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_round"
+        android:label="SafePassage"
+        android:logo="@mipmap/ic_launcher_round"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
         <activity android:name="yanjiex.calit2.uci.MainActivity" >

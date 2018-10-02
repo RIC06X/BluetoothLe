@@ -1,13 +1,12 @@
 package org.bluetooth.bledemo;
 
-import org.bluetooth.bledemo.R;
-import android.os.Bundle;
-import android.os.Handler;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +41,7 @@ public class ScanningActivity extends ListActivity {
         if(mBleWrapper.checkBleHardwareAvailable() == false) {
         	bleMissing();
         }
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -70,8 +70,8 @@ public class ScanningActivity extends ListActivity {
 		mBleWrapper.startScanning();
 		
         invalidateOptionsMenu();
-    };
-    
+    }
+
     @Override
     protected void onPause() {
     	super.onPause();
@@ -80,8 +80,8 @@ public class ScanningActivity extends ListActivity {
     	invalidateOptionsMenu();
     	
     	mDevicesListAdapter.clearList();
-    };
-    
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -112,12 +112,20 @@ public class ScanningActivity extends ListActivity {
             	mScanning = false;
             	mBleWrapper.stopScanning();
                 break;
+            case android.R.id.home:
+                onBackPressed();
+
         }
         
         invalidateOptionsMenu();
         return true;
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     /* user has selected one of the device */
     @Override
@@ -126,7 +134,7 @@ public class ScanningActivity extends ListActivity {
         if (device == null)
             return;
 
-        final Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(PeripheralActivity.EXTRAS_DEVICE_NAME, device.getName());
         intent.putExtra(PeripheralActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
         intent.putExtra(PeripheralActivity.EXTRAS_DEVICE_RSSI, mDevicesListAdapter.getRssi(position));

@@ -1,8 +1,8 @@
 package org.bluetooth.bledemo;
 
-import java.util.HashMap;
-
 import android.util.SparseArray;
+
+import java.util.HashMap;
 
 public class BleNamesResolver {
 	private static HashMap<String, String> mServices = new HashMap<String, String>();
@@ -85,9 +85,11 @@ public class BleNamesResolver {
 		mServices.put("00001804-0000-1000-8000-00805f9b34fb", "Tx Power");
 
 		mServices.put("4fafc201-1fb5-459e-8fcc-c5c9c331914b", "Urology service");
+        mServices.put("65f63692-5d2c-4e49-8143-289371e0cc70", "BATT_SERV");
 
 		mCharacteristics.put("beb5483e-36e1-4688-b7f5-ea07361b26a8", "Tare and Calibrate");
 		mCharacteristics.put("4a78b8dd-a43d-46cf-9270-f6b750a717c8", "Weight");
+        mCharacteristics.put("57ee883f-82a4-4969-868d-be01d5018cf3", "BATT_INFO");
 
 
 		mCharacteristics.put("00002a43-0000-1000-8000-00805f9b34fb", "Alert Category ID");

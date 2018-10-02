@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 26
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "org.bluetooth.bledemo"
         minSdkVersion 21
-        targetSdkVersion 18
+        targetSdkVersion 21
     }
 
     buildTypes {
@@ -19,9 +19,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:18.0.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.robinhood.spark:spark:1.2.0'
+    implementation 'com.android.support:support-v4:23.0.0'
+    implementation 'com.android.support:appcompat-v7:23.4.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.robinhood.spark:spark:1.2.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
